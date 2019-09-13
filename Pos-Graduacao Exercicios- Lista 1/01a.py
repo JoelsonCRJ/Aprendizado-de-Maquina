@@ -64,7 +64,7 @@ def NN(data_training,data_test):
         test=np.array(data_test.loc[i,0:6])
         for z in range(0,len(data_training.index)):
             trainning=np.array(data_training.loc[z,0:6])        
-            distances.append(np.sqrt(np.power(np.sum(np.subtract(trainning,test)),2)))
+            distances.append(np.sqrt(np.sum(np.power(np.subtract(trainning,test),2))))
         
         #min[0] = index of min value and min[1] is the min value
         min = np.where(distances == np.amin(distances))
@@ -83,14 +83,24 @@ def accuracy(labels,prediction):
             count=count+1
     return (count/len(labels))*100
 
+
+
+def remove_samples_by_value(data,n_atributes):
+    for i in range(0,len(data.index)):
+        if(data.loc[i,:]<-100):
+            print(i)
+    #print(data)                
+    return data
 #------------------------------------------------------------------
 """lendo os arquivos"""
 data_test = pd.read_csv('nebulosa_test.txt',sep=' ',header = None)
 data_trainning = pd.read_csv('nebulosa_train.txt',sep=' ',header = None)
-#excluindo amostras que contenham dados incompletos
+#excluindo amostras que contenham dados incompletos (atributo c valor -100)
+#remove_samples_by_value(data_test,7)
 
-for
-
+for i in range(0,len(data_test.index)):
+   if(data_test.loc[i,:]<-100):
+       print(i)
 
 
 
