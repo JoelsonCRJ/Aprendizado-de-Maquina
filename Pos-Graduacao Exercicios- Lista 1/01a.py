@@ -21,9 +21,9 @@ data_label3
 
 def split_by_labels(data,label,labels_column):
     index_data_label=[]
-    for i in range(0,len(data.index)):
+    for i in range(0,len(data)-1):
         if(data.loc[i,labels_column]==label):
-           index_data_label.append(i)
+            index_data_label.append(i)
     return index_data_label
 
 """
@@ -97,15 +97,23 @@ data_test = pd.read_csv('nebulosa_test.txt',sep=' ',header = None)
 data_trainning = pd.read_csv('nebulosa_train.txt',sep=' ',header = None)
 #excluindo amostras que contenham dados incompletos (atributo c valor -100)
 #remove_samples_by_value(data_test,7)
-
-for i in range(0,len(data_test.index)):
-   if(data_test.loc[i,:]<-100):
-       print(i)
+header=['0', '1' ,'2', '3', '4', '5', '6', '7']
+data_test.columns= header
 
 
+data_test=data_test.drop(columns=['0', '1'])
+ 
 
+print(data_test)
+for i in range(2,6):
+    data_test.drop(data_test[data_test['{}'.format(i)] <= 0].index, inplace=True)
+
+#   data_trainning.drop(data_trainning[data_trainning[i] <= 0].index, inplace=True)
+
+
+print(data_test)
 #separando amostras por label
-index_label1= split_by_labels(data_trainning,1,7)
+index_label1 = split_by_labels(data_trainning,1,7)
 index_label2= split_by_labels(data_trainning,2,7)
 index_label3= split_by_labels(data_trainning,3,7)
 
