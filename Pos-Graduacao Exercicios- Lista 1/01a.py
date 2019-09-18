@@ -20,10 +20,9 @@ data_label3
 """
 
 def split_by_labels(data,label,labels_column):
-    index_data_label=[]
-    for i in range(0,len(data)-1):
-        if(data.loc[i,labels_column]==label):
-            index_data_label.append(i)
+    index = data[data.'{}'.format(labels_column) == label].index
+    index_data_label = list(index)
+    
     return index_data_label
 
 """
@@ -32,7 +31,7 @@ função para calcular os centroides das classes
 
 def sample_centroids(data,sample_index_list,n_atributes):
     m=np.empty((7),dtype=float)
-    for i in range (0,n_atributes):
+    for i in range (2,n_atributes):
         m[i]=data.loc[sample_index_list,i].median()
     return m
 
@@ -43,11 +42,11 @@ classe
 def rocchio(data,Center_1,Center_2,Center_3,n_atributes):
     labels=[]
     euclidian=np.empty((3),dtype = float)
-    for i in range(0,len(data.index)):
-        for j in range(0,n_atributes):
-            euclidian[0]=np.sqrt(np.power(np.sum(Center_1[j]-data.loc[i,j]),2))
-            euclidian[1]=np.sqrt(np.power(np.sum(Center_2[j]-data.loc[i,j]),2))
-            euclidian[2]=np.sqrt(np.power(np.sum(Center_3[j]-data.loc[i,j]),2))
+    for i in range(0,len(data)):
+        for j in range(2,n_atributes):
+            euclidian[0]=np.sqrt(np.power(np.sum(Center_1[j]-data.loc[i,'{}'.format(j)]),2))
+            euclidian[1]=np.sqrt(np.power(np.sum(Center_2[j]-data.loc[i,'{}'.format(j)]),2))
+            euclidian[2]=np.sqrt(np.power(np.sum(Center_3[j]-data.loc[i,'{}'.format(j)]),2))
             
         if(np.min(euclidian)==euclidian[0]):
             labels.append(1)
@@ -60,9 +59,9 @@ def rocchio(data,Center_1,Center_2,Center_3,n_atributes):
 def NN(data_training,data_test):
     distances=[]
     labels=[]
-    for i in range(0,len(data_test.index)):
+    for i in range(0,len(data_test)):
         test=np.array(data_test.loc[i,0:6])
-        for z in range(0,len(data_training.index)):
+        for z in range(0,len(data_training)):
             trainning=np.array(data_training.loc[z,0:6])        
             distances.append(np.sqrt(np.sum(np.power(np.subtract(trainning,test),2))))
         
@@ -74,7 +73,7 @@ def NN(data_training,data_test):
         
     return np.array(labels)
 
-##calculando acurácia
+##calculando acurácian_atributes
 
 def accuracy(labels,prediction):
     count=0
@@ -97,26 +96,27 @@ data_test = pd.read_csv('nebulosa_test.txt',sep=' ',header = None)
 data_trainning = pd.read_csv('nebulosa_train.txt',sep=' ',header = None)
 #excluindo amostras que contenham dados incompletos (atributo c valor -100)
 #remove_samples_by_value(data_test,7)
-header=['0', '1' ,'2', '3', '4', '5', '6', '7']
+header=['A', 'B' ,'C', 'D', 'E', 'F', 'F', 'LABEL']
 data_test.columns= header
+data_trainning.columns=header
 
+data_test=data_test.drop(columns=['A','B'])
+data_trainning=data_trainning.drop(columns=['A', 'B'])
 
-data_test=data_test.drop(columns=['0', '1'])
- 
-
-print(data_test)
-for i in range(2,6):
-    data_test.drop(data_test[data_test['{}'.format(i)] <= 0].index, inplace=True)
 
 #   data_trainning.drop(data_trainning[data_trainning[i] <= 0].index, inplace=True)
 
 
-print(data_test)
+print(len(data_trainning))
 #separando amostras por label
-index_label1 = split_by_labels(data_trainning,1,7)
-index_label2= split_by_labels(data_trainning,2,7)
-index_label3= split_by_labels(data_trainning,3,7)
+label1=data_trainning[data_trainning.LABEL == 1]
+label1=np.array(label1)
+label2=data_trainning[data_trainning.LABEL == 2]
+label2=np.array(label2)
+label3=data_trainning[data_trainning.LABEL == 3]
+label3=np.array(label3)
 
+print(label1[label1[:,1] != -100])
 #calculando centroides para as classes
 C1=sample_centroids(data_trainning,index_label1,7)
 C2=sample_centroids(data_trainning,index_label2,7)
