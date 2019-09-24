@@ -43,7 +43,7 @@ def rocchio(data,Center_1,Center_2,Center_3):
 def NN(trainning_array,test_array):
     labels=[]
     for i in range(0,test_array.shape[0]):
-        distances=np.zeros((123))
+        distances=np.zeros((len(trainning_array)))
         for z in range(0,trainning_array.shape[0]):
             distances[z]=np.sqrt(np.sum(np.power(np.subtract(test_array[i,0:5],trainning_array[z,0:5]),2)))
         #min[0] = index of min value and min[1] is the min value
@@ -79,11 +79,11 @@ data_trainning=data_trainning.drop(columns=['A', 'B'])
 samples_for_test = np.array(data_test)
 
 #pre processamento por intervalo de valor dos atributos
-samples_for_test=samples_for_test[(samples_for_test[:,0] >0) & (samples_for_test[:,0] <= 4.5)]
-samples_for_test=samples_for_test[(samples_for_test[:,1] >0) & (samples_for_test[:,1] <= 4.5)]
-samples_for_test=samples_for_test[(samples_for_test[:,2] >0) & (samples_for_test[:,2] <= 4.5)]
-samples_for_test=samples_for_test[(samples_for_test[:,3] >0) & (samples_for_test[:,3] <= 4.5)]
-samples_for_test=samples_for_test[(samples_for_test[:,4] >0) & (samples_for_test[:,4] <= 4.5)]
+samples_for_test=samples_for_test[(samples_for_test[:,0] >0) ]
+samples_for_test=samples_for_test[(samples_for_test[:,1] >0) ]
+samples_for_test=samples_for_test[(samples_for_test[:,2] >0) ]
+samples_for_test=samples_for_test[(samples_for_test[:,3] >0)]
+samples_for_test=samples_for_test[(samples_for_test[:,4] >0)]
 
 
 #separando amostras de treinamento por label
@@ -94,23 +94,23 @@ label2=np.array(label2)
 label3=data_trainning[data_trainning.LABEL == 3]
 label3=np.array(label3)
 #pre processamento por intervalo de valor dos atributos
-label1=label1[(label1[:,0] >0) & (label1[:,0] <= 4.5)]
-label1=label1[(label1[:,1] >0) & (label1[:,1] <= 4.5)]
-label1=label1[(label1[:,2] >0) & (label1[:,2] <= 4.5)]
-label1=label1[(label1[:,3] >0) & (label1[:,3] <= 4.5)]
-label1=label1[(label1[:,4] >0) & (label1[:,4] <= 4.5)]
+label1=label1[(label1[:,0] >0) ]
+label1=label1[(label1[:,1] >0) ]
+label1=label1[(label1[:,2] >0) ]
+label1=label1[(label1[:,3] >0) ]
+label1=label1[(label1[:,4] >0) ]
 
-label2=label2[(label2[:,0] >0) & (label2[:,0] <= 4.5)]
-label2=label2[(label2[:,1] >0) & (label2[:,1] <= 4.5)]
-label2=label2[(label2[:,2] >0) & (label2[:,2] <= 4.5)]
-label2=label2[(label2[:,3] >0) & (label2[:,3] <= 4.5)]
-label2=label2[(label2[:,4] >0) & (label2[:,4] <= 4.5)]
+label2=label2[(label2[:,0] >0) ]
+label2=label2[(label2[:,1] >0) ]
+label2=label2[(label2[:,2] >0) ]
+label2=label2[(label2[:,3] >0) ]
+label2=label2[(label2[:,4] >0) ]
 
-label3=label3[(label3[:,0] >0) & (label3[:,0] <= 4.5)]
-label3=label3[(label3[:,1] >0) & (label3[:,1] <= 4.5)]
-label3=label3[(label3[:,2] >0) & (label3[:,2] <= 4.5)]
-label3=label3[(label3[:,3] >0) & (label3[:,3] <= 4.5)]
-label3=label3[(label3[:,4] >0) & (label3[:,4] <= 4.5)]
+label3=label3[(label3[:,0] >0) ]
+label3=label3[(label3[:,1] >0) ]
+label3=label3[(label3[:,2] >0) ]
+label3=label3[(label3[:,3] >0) ]
+label3=label3[(label3[:,4] >0) ]
 
 #calculando centroides para as classes
 C1=sample_centroids(label1)
@@ -125,7 +125,7 @@ accuracy_rocchio = accuracy(labels_vector,prediction_vector_rocchio)
    
 print("Accuracy using Rocchio: {0:.2f}%".format( accuracy_rocchio))
 trainning_vector = np.concatenate((label1,label2,label3))
-
+#print(len(trainning_vector))
 prediction_vector_NN=NN(trainning_vector,samples_for_test)
 accuracy_NN=accuracy(labels_vector,prediction_vector_NN)
 print("Accuracy using NN: {0:.2f}%".format( accuracy_NN))
