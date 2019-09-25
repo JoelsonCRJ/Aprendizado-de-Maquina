@@ -35,19 +35,19 @@ def rocchio(data,Center_1,Center_2,Center_3):
             labels.append(3)
     return labels
 
-def NN(trainning_array,test_array):
+def NN(trainning_array,test_array,labels_column):
     labels=[]
     for i in range(0,test_array.shape[0]):
         distances=np.zeros((len(trainning_array)))
         for z in range(0,trainning_array.shape[0]):
-            distances[z]=np.sqrt(np.sum(np.power(np.subtract(test_array[i,0:4],trainning_array[z,0:4]),2)))
+            distances[z]=np.sqrt(np.sum(np.power(np.subtract(test_array[i,0:labels_column],trainning_array[z,0:labels_column]),2)))
         #min[0] = index of min value and min[1] is the min value
         #print(distances)
         distances = list(distances)
         min_index = distances.index(min(distances))
         #print(min_index)
         #print(min_index)
-        labels.append(trainning_array[min_index,4])  
+        labels.append(trainning_array[min_index,labels_column])  
     return np.array(labels)
 
 

@@ -9,7 +9,7 @@ Created on Thu Sep 12 09:26:56 2019
 import pandas as pd
 import numpy as np
 from scipy import stats
-from my_awesome_functions import *
+from functions import *
 
 #------------------------------------------------------------------
 """lendo os arquivos"""
@@ -49,7 +49,7 @@ print('Alternativa A - removendo apenas amostras com dados inconsistentes')
 print("Accuracy using Rocchio: {0:.2f}%".format( accuracy_rocchio))
 trainning_vector = np.concatenate((label1,label2,label3))
 #print(len(trainning_vector))
-prediction_vector_NN=NN(trainning_vector,samples_for_test)
+prediction_vector_NN=NN(trainning_vector,samples_for_test,4)
 accuracy_NN=accuracy(labels_vector,prediction_vector_NN)
 print("Accuracy using NN: {0:.2f}%".format( accuracy_NN))
 print('------------------------------------------------------------------')
@@ -77,6 +77,8 @@ print('Alternativa B - filtrando ruido e outliers')
 
 accuracy_rocchio = accuracy(labels_vector,prediction_vector_rocchio)
 print("Accuracy using Rocchio: {0:.2f}%".format( accuracy_rocchio))
-prediction_vector_NN=NN(rounded_trainning_vector,rounded_test_vector)
+
+
+prediction_vector_NN=NN(rounded_trainning_vector,rounded_test_vector,4)
 accuracy_NN=accuracy(labels_vector,prediction_vector_NN)
 print("Accuracy using NN: {0:.2f}%".format( accuracy_NN))
