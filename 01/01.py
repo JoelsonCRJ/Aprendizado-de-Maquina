@@ -9,7 +9,7 @@ Created on Thu Sep 12 09:26:56 2019
 import pandas as pd
 import numpy as np
 from scipy import stats
-from functions import *
+from functions01 import *
 
 #------------------------------------------------------------------
 """lendo os arquivos"""
