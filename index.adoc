@@ -1,0 +1,69 @@
+:source-highlighter: pygments 	
+:imagesdir: ./figures
+:stem:
+
+= PGEE-5574: Tópicos Especiais em Processamento de Sinais: Aprendizado de Máquina
+Joelson Rocha <JoelsonRocha.Eng@gmail.com>
+:toc: left
+
+== Introdução
+
+Este espaço tem como objetivo documentar as atividades propostas pelo Professor Dr. Patrick Marques Ciarellix durante a disciplina de Tópicos Especiais em Processamento de Sinais: Aprendizado de Máquina. Aqui são compartilhados enunciados de questões, bem como a solução comentada e implementada.
+
+Os códigos foram desenvolvidos na linguagem de programação Python, com auxílio das bibliotecas Numpy e Pandas, e estão disponíveis ao final da resolução de cada questão.
+
+== Lista 1  ==
+
+=== Pré-processamento de dados ===
+=== Questão 1 ===
+A base de dados link:01/nebulosa.txt[Nebulosa] está contaminada com ruídos,
+redundâncias, dados incompletos (substituídos pelo valor -100), inconsistências e
+outliers. Para esta base:
+
+a) Obtenha os resultados da classificação (métrica acurácia) usando a técnica do vizinho
+mais próximo (NN) e Rocchio. Utilize a distância Euclidiana e a base de dados crua, sem
+pré-processamento. Use o conjunto de 143 amostras  para link:01/nebulosa_train.txt[treino] e o de 28 amostras
+para link:01/nebulosa_test.txt[teste]. Remova as amostras com dados incompletos.
+
+b)Realize um pré-processamento sobre os dados de forma a reduzir os ruídos, as
+redundâncias, inconsistências, outliers e a interferência dos dados incompletos.
+Obtenha os resultados da classificação usando a técnica do vizinho mais próximo (NN)
+e Rocchio usando a distância Euclidiana e a mesma divisão dos dados.
+
+c) Compare os resultados obtidos em a) e b). Qual deles retornou o melhor resultado?
+Por quê?
+
+*Solução*
+
+*1.a)*  
+
+Inicialmente, observou-se que os dois primeiros atributos, ID e nome do usuário representado numericamente, não eram importantes para a tarefa de  classificação.  Sendo assim, fez-se o descarte dos mesmos. Observou-se também, que os atributos 6 e 7, data de nascimento e idade da pessoa, continham a mesma informação, dessa forma, fez-se a remorção do atributo idade.
+Pede-se para realizar a remorção de amostras com dados incompletos,ou seja, que apresentam o valor _"-100"_  em algum de seus atributos.
+
+_Implementação da técnica do vizinho mais próximo (NN):_
+
+A técnica do vizinho mais próximo se baseia na distância euclidiana entre a amostra de teste e todas as amostras do conjunto de treino, ou seja, é necessário calcular todas as distâncias e atualizar o rótulo da amostra de teste com o rótulo da amostra do conjunto de treino que se encontra mais próxima. 
+
+A listagem abaixo ilustra como foi feita a implementação do algoritmo NN, utilizando a distância euclidiana entre os atributos das amostras. Para cada amostra de teste é gerado um vetor de distâncias, sendo possível encontrar a distância mínima e seu respectivo endereço. Dessa forma, atualiza-se o rótulo da amostra de teste com o rótulo da amostra de treinamento mais próxima.
+
+[source,python]
+----
+def NN(trainning_array,test_array,labels_column):
+    labels=[]
+    for i in range(0,test_array.shape[0]):
+        distances=np.zeros((len(trainning_array)))
+        for z in range(0,trainning_array.shape[0]):
+            distances[z]=np.sqrt(np.sum(np.power(np.subtract(test_array[i,0:labels_column],trainning_array[z,0:labels_column]),2)))
+        #min[0] = index of min value and min[1] is the min value
+        distances = list(distances)
+        min_index = distances.index(min(distances))
+        labels.append(trainning_array[min_index,labels_column])  
+    return np.array(labels)
+----
+
+
+
+
+
+
+
