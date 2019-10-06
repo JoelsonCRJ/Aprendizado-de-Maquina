@@ -504,6 +504,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_pré_processamento_de_dados">Pré-processamento de dados</a></li>
 <li><a href="#_questão_1">Questão 1</a></li>
+<li><a href="#_solução_1_a">Solução 1.a</a></li>
+<li><a href="#_solução_1_b">Solução 1.b</a></li>
+<li><a href="#_solução_1_c">Solução 1.c</a></li>
 </ul>
 </li>
 </ul>
@@ -551,18 +554,15 @@ e Rocchio usando a distância Euclidiana e a mesma divisão dos dados.</p>
 <p>c) Compare os resultados obtidos em a) e b). Qual deles retornou o melhor resultado?
 Por quê?</p>
 </div>
-<div class="paragraph">
-<p><strong>Solução</strong></p>
 </div>
-<div class="paragraph">
-<p><strong>1.a)</strong></p>
-</div>
+<div class="sect2">
+<h3 id="_solução_1_a">Solução 1.a</h3>
 <div class="paragraph">
 <p>Inicialmente, observou-se que os dois primeiros atributos, ID e nome do usuário representado numericamente, não eram importantes para a tarefa de  classificação.  Sendo assim, fez-se o descarte dos mesmos. Observou-se também, que os atributos 6 e 7, data de nascimento e idade da pessoa, continham a mesma informação, dessa forma, fez-se a remorção do atributo idade.
 Pede-se para realizar a remorção de amostras com dados incompletos,ou seja, que apresentam o valor <em>"-100"</em>  em algum de seus atributos.</p>
 </div>
 <div class="paragraph">
-<p><em>Implementação da técnica do vizinho mais próximo (NN):</em></p>
+<p><strong><em>Vizinho mais próximo (NN):</em></strong></p>
 </div>
 <div class="paragraph">
 <p>A técnica do vizinho mais próximo se baseia na distância euclidiana entre a amostra de teste e todas as amostras do conjunto de treino, ou seja, é necessário calcular todas as distâncias e atualizar o rótulo da amostra de teste com o rótulo da amostra do conjunto de treino que se encontra mais próxima.</p>
@@ -571,6 +571,7 @@ Pede-se para realizar a remorção de amostras com dados incompletos,ou seja, qu
 <p>A listagem abaixo ilustra como foi feita a implementação do algoritmo NN, utilizando a distância euclidiana entre os atributos das amostras. Para cada amostra de teste é gerado um vetor de distâncias, sendo possível encontrar a distância mínima e seu respectivo endereço. Dessa forma, atualiza-se o rótulo da amostra de teste com o rótulo da amostra de treinamento mais próxima.</p>
 </div>
 <div class="listingblock">
+<div class="title">NN</div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><span class="tok-k">def</span> <span class="tok-nf">NN</span><span class="tok-p">(</span><span class="tok-n">trainning_array</span><span class="tok-p">,</span><span class="tok-n">test_array</span><span class="tok-p">,</span><span class="tok-n">labels_column</span><span class="tok-p">):</span>
     <span class="tok-n">labels</span><span class="tok-o">=</span><span class="tok-p">[]</span>
@@ -585,13 +586,168 @@ Pede-se para realizar a remorção de amostras com dados incompletos,ou seja, qu
     <span class="tok-k">return</span> <span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">array</span><span class="tok-p">(</span><span class="tok-n">labels</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Após sua execução, essa função retorna um vetor com os novos rótulos encontrados para cada amostra de teste, para que dessa forma seja calculada a acurácia de tal método, comparando o vetor de rótulos corretos com os novos gerados pelo classificador NN. A função para o cálculo da acurácia segue abaixo.</p>
+</div>
+<div class="listingblock">
+<div class="title">accuracy</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span class="tok-k">def</span> <span class="tok-nf">accuracy</span><span class="tok-p">(</span><span class="tok-n">labels</span><span class="tok-p">,</span><span class="tok-n">prediction</span><span class="tok-p">):</span>
+    <span class="tok-n">count</span><span class="tok-o">=</span><span class="tok-mi">0</span>
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">labels</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">]):</span>
+        <span class="tok-k">if</span><span class="tok-p">(</span><span class="tok-n">labels</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">==</span><span class="tok-n">prediction</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]):</span>
+            <span class="tok-n">count</span><span class="tok-o">=</span><span class="tok-n">count</span><span class="tok-o">+</span><span class="tok-mi">1</span>
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">count</span><span class="tok-o">/</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">labels</span><span class="tok-p">))</span><span class="tok-o">*</span><span class="tok-mi">100</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong><em>Rocchio:</em></strong></p>
+</div>
+<div class="paragraph">
+<p>Esta técnica também se baseia na distância Euclidiana, porém medida entre a amostra de teste e os centróides gerados pelas amostras de treino de mesmo rótulo ( à partir da média de seus atributos).</p>
+</div>
+<div class="paragraph">
+<p>A função <em>split_by_labels</em>  recebe as amostras de treinamento e as separa em 3 grupos de acordo com seus rótulos.</p>
+</div>
+<div class="listingblock">
+<div class="title">split_by_labels</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span class="tok-k">def</span> <span class="tok-nf">split_by_labels</span><span class="tok-p">(</span><span class="tok-n">array</span><span class="tok-p">):</span>
+    <span class="tok-n">L1</span><span class="tok-o">=</span><span class="tok-n">array</span><span class="tok-p">[</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">array</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">==</span><span class="tok-mi">1</span><span class="tok-p">]</span>
+    <span class="tok-n">L2</span><span class="tok-o">=</span><span class="tok-n">array</span><span class="tok-p">[</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">array</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">==</span><span class="tok-mi">2</span><span class="tok-p">]</span>
+    <span class="tok-n">L3</span><span class="tok-o">=</span><span class="tok-n">array</span><span class="tok-p">[</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">array</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">==</span><span class="tok-mi">3</span><span class="tok-p">]</span>
+    <span class="tok-k">return</span> <span class="tok-n">L1</span><span class="tok-p">,</span><span class="tok-n">L2</span><span class="tok-p">,</span><span class="tok-n">L3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Em seguida, utilizou-se a função <em>sample_centrois</em> para calcular os centroides de cada rótulo de forma individual à partir da média de cada um dos atributos das amostras de mesmo rótulo.</p>
+</div>
+<div class="listingblock">
+<div class="title">sample_centroids</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span class="tok-k">def</span> <span class="tok-nf">sample_centroids</span><span class="tok-p">(</span><span class="tok-n">data</span><span class="tok-p">):</span>
+    <span class="tok-n">m</span><span class="tok-o">=</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">empty</span><span class="tok-p">((</span><span class="tok-n">data</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span> <span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">),</span><span class="tok-n">dtype</span><span class="tok-o">=</span><span class="tok-nb">float</span><span class="tok-p">)</span>
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">data</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">):</span>
+        <span class="tok-n">m</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">=</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">mean</span><span class="tok-p">(</span><span class="tok-n">data</span><span class="tok-p">[:,</span><span class="tok-n">i</span><span class="tok-p">],</span><span class="tok-n">dtype</span><span class="tok-o">=</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">float64</span><span class="tok-p">)</span>
+    <span class="tok-k">return</span> <span class="tok-n">m</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Uma vez tendo as coordenadas de cada um dos centroids, implementou-se a função <em>Rocchio</em> , que calcula a distância de cada amostra de teste e atualiza seu rótulo com o centróid que está mais próximo dela.</p>
+</div>
+<div class="listingblock">
+<div class="title">Rocchio</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span class="tok-k">def</span> <span class="tok-nf">rocchio</span><span class="tok-p">(</span><span class="tok-n">data</span><span class="tok-p">,</span><span class="tok-n">Center_1</span><span class="tok-p">,</span><span class="tok-n">Center_2</span><span class="tok-p">,</span><span class="tok-n">Center_3</span><span class="tok-p">):</span>
+    <span class="tok-n">labels</span><span class="tok-o">=</span><span class="tok-p">[]</span>
+    <span class="tok-n">euclidian</span><span class="tok-o">=</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">empty</span><span class="tok-p">((</span><span class="tok-mi">3</span><span class="tok-p">),</span><span class="tok-n">dtype</span> <span class="tok-o">=</span> <span class="tok-nb">float</span><span class="tok-p">)</span>
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">data</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">]):</span>
+        <span class="tok-k">for</span> <span class="tok-n">j</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,(</span><span class="tok-n">data</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">)):</span>
+            <span class="tok-n">euclidian</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">]</span><span class="tok-o">=</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">sqrt</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">power</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">sum</span><span class="tok-p">(</span><span class="tok-n">Center_1</span><span class="tok-p">[</span><span class="tok-n">j</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-n">data</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">,</span><span class="tok-n">j</span><span class="tok-p">]),</span><span class="tok-mi">2</span><span class="tok-p">))</span>
+            <span class="tok-n">euclidian</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">=</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">sqrt</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">power</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">sum</span><span class="tok-p">(</span><span class="tok-n">Center_2</span><span class="tok-p">[</span><span class="tok-n">j</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-n">data</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">,</span><span class="tok-n">j</span><span class="tok-p">]),</span><span class="tok-mi">2</span><span class="tok-p">))</span>
+            <span class="tok-n">euclidian</span><span class="tok-p">[</span><span class="tok-mi">2</span><span class="tok-p">]</span><span class="tok-o">=</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">sqrt</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">power</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">sum</span><span class="tok-p">(</span><span class="tok-n">Center_3</span><span class="tok-p">[</span><span class="tok-n">j</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-n">data</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">,</span><span class="tok-n">j</span><span class="tok-p">]),</span><span class="tok-mi">2</span><span class="tok-p">))</span>
+
+        <span class="tok-k">if</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">min</span><span class="tok-p">(</span><span class="tok-n">euclidian</span><span class="tok-p">)</span><span class="tok-o">==</span><span class="tok-n">euclidian</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">]):</span>
+            <span class="tok-n">labels</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">)</span>
+        <span class="tok-k">elif</span><span class="tok-p">(</span><span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">min</span><span class="tok-p">(</span><span class="tok-n">euclidian</span><span class="tok-p">)</span><span class="tok-o">==</span><span class="tok-n">euclidian</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]):</span>
+            <span class="tok-n">labels</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+        <span class="tok-k">else</span><span class="tok-p">:</span>
+            <span class="tok-n">labels</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-mi">3</span><span class="tok-p">)</span>
+    <span class="tok-k">return</span> <span class="tok-n">labels</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ao final, calculou-se a acurácia deste algorítmo e obteve-se o seguinte resultado, exposto na Tabela 1:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Resultados NN e Rocchio: questão a.</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Algoritmo</th>
+<th class="tableblock halign-left valign-top">Acurácia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">76.00%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rocchio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">96.00%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_solução_1_b">Solução 1.b</h3>
+<div class="paragraph">
+<p>Para esta questão utilizou-se o arredondamento dos dados como solução para o ruído, transformando números decimais em números inteiros. Dando continuidade ao pre-processamento de dados que foi feito na letra a, utilizou-se o artifício de substituição de valores fora da faixa (outliers) pela moda do atributo no qual o mesmo se encontra, implementação realizada na função <em>replace_by_mode</em>.</p>
+</div>
+<div class="listingblock">
+<div class="title">replace_by_mode</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span class="tok-k">def</span> <span class="tok-nf">replace_by_mode</span><span class="tok-p">(</span><span class="tok-n">array</span><span class="tok-p">):</span>
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">array</span><span class="tok-o">.</span><span class="tok-n">shape</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">):</span>
+        <span class="tok-k">while</span> <span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-o">==</span><span class="tok-mi">0</span><span class="tok-p">):</span>
+            <span class="tok-n">index</span> <span class="tok-o">=</span> <span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">where</span><span class="tok-p">((</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">&lt;</span><span class="tok-mi">1</span><span class="tok-p">)</span> <span class="tok-o">|</span> <span class="tok-p">(</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">&gt;</span><span class="tok-mi">3</span><span class="tok-p">))</span> <span class="tok-c1">#get indexes</span>
+            <span class="tok-n">index</span> <span class="tok-o">=</span> <span class="tok-n">index</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">]</span> <span class="tok-c1">#array of indexes</span>
+            <span class="tok-n">m</span><span class="tok-o">=</span><span class="tok-n">stats</span><span class="tok-o">.</span><span class="tok-n">mode</span><span class="tok-p">(</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">i</span><span class="tok-p">],</span><span class="tok-n">axis</span><span class="tok-o">=</span><span class="tok-bp">None</span><span class="tok-p">)</span> <span class="tok-c1">#calculating the mode of this atribute</span>
+            <span class="tok-k">for</span> <span class="tok-n">j</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">index</span><span class="tok-p">)):</span>
+                <span class="tok-n">array</span><span class="tok-p">[</span><span class="tok-n">index</span><span class="tok-p">[</span><span class="tok-n">j</span><span class="tok-p">],</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">=</span><span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">m</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">])</span>
+            <span class="tok-n">i</span><span class="tok-o">=</span><span class="tok-mi">1</span>
+
+        <span class="tok-n">index</span> <span class="tok-o">=</span> <span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">where</span><span class="tok-p">((</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">&lt;</span><span class="tok-mi">1</span><span class="tok-p">)</span> <span class="tok-o">|</span> <span class="tok-p">(</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">&gt;</span><span class="tok-mi">4</span><span class="tok-p">))</span>
+        <span class="tok-n">index</span> <span class="tok-o">=</span> <span class="tok-n">index</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">]</span>
+        <span class="tok-n">m</span><span class="tok-o">=</span><span class="tok-n">stats</span><span class="tok-o">.</span><span class="tok-n">mode</span><span class="tok-p">(</span><span class="tok-n">array</span><span class="tok-p">[:,</span><span class="tok-n">i</span><span class="tok-p">],</span><span class="tok-n">axis</span><span class="tok-o">=</span><span class="tok-bp">None</span><span class="tok-p">)</span>
+        <span class="tok-k">for</span> <span class="tok-n">j</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">index</span><span class="tok-p">)):</span>
+            <span class="tok-n">array</span><span class="tok-p">[</span><span class="tok-n">index</span><span class="tok-p">[</span><span class="tok-n">j</span><span class="tok-p">],</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-o">=</span><span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">m</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">])</span>
+    <span class="tok-k">return</span> <span class="tok-n">array</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Os resultados obtidos com esse tipo de abordagem estão expostos na Tabela 2:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Resultados NN e Rocchio: questão b</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Algoritmo</th>
+<th class="tableblock halign-left valign-top">Acurácia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">72.00%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rocchio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100.00%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_solução_1_c">Solução 1.c</h3>
+<div class="paragraph">
+<p>Comparando as Tabelas 1 e 2, nota-se para essa base de dados, o algoritmo Rocchio teve uma acurácia melhor do que o NN nos dois casos. O pre-processamento dos dados conseguiu otimizar a tarefa de classificação para o algoritmo Rocchio, trazendo um resultado de 100%, após a detecção e substituição dos outiliers e a eliminação do ruído.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-06 00:35:49 -03
+Last updated 2019-10-06 01:45:36 -03
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -33,19 +33,18 @@ e Rocchio usando a distância Euclidiana e a mesma divisão dos dados.
 c) Compare os resultados obtidos em a) e b). Qual deles retornou o melhor resultado?
 Por quê?
 
-*Solução*
-
-*1.a)*  
+=== Solução 1.a ===  
 
 Inicialmente, observou-se que os dois primeiros atributos, ID e nome do usuário representado numericamente, não eram importantes para a tarefa de  classificação.  Sendo assim, fez-se o descarte dos mesmos. Observou-se também, que os atributos 6 e 7, data de nascimento e idade da pessoa, continham a mesma informação, dessa forma, fez-se a remorção do atributo idade.
 Pede-se para realizar a remorção de amostras com dados incompletos,ou seja, que apresentam o valor _"-100"_  em algum de seus atributos.
 
-_Implementação da técnica do vizinho mais próximo (NN):_
+*_Vizinho mais próximo (NN):_*
 
 A técnica do vizinho mais próximo se baseia na distância euclidiana entre a amostra de teste e todas as amostras do conjunto de treino, ou seja, é necessário calcular todas as distâncias e atualizar o rótulo da amostra de teste com o rótulo da amostra do conjunto de treino que se encontra mais próxima. 
 
 A listagem abaixo ilustra como foi feita a implementação do algoritmo NN, utilizando a distância euclidiana entre os atributos das amostras. Para cada amostra de teste é gerado um vetor de distâncias, sendo possível encontrar a distância mínima e seu respectivo endereço. Dessa forma, atualiza-se o rótulo da amostra de teste com o rótulo da amostra de treinamento mais próxima.
 
+.NN
 [source,python]
 ----
 def NN(trainning_array,test_array,labels_column):
@@ -57,13 +56,130 @@ def NN(trainning_array,test_array,labels_column):
         #min[0] = index of min value and min[1] is the min value
         distances = list(distances)
         min_index = distances.index(min(distances))
-        labels.append(trainning_array[min_index,labels_column])  
+        labels.append(trainning_array[min_index,labels_column])
     return np.array(labels)
 ----
 
+Após sua execução, essa função retorna um vetor com os novos rótulos encontrados para cada amostra de teste, para que dessa forma seja calculada a acurácia de tal método, comparando o vetor de rótulos corretos com os novos gerados pelo classificador NN. A função para o cálculo da acurácia segue abaixo.
+
+.accuracy
+[source,python]
+----
+def accuracy(labels,prediction):
+    count=0
+    for i in range(0,labels.shape[0]):
+        if(labels[i]==prediction[i]):
+            count=count+1
+    return (count/len(labels))*100
+----
+
+*_Rocchio:_*
+
+Esta técnica também se baseia na distância Euclidiana, porém medida entre a amostra de teste e os centróides gerados pelas amostras de treino de mesmo rótulo ( à partir da média de seus atributos).
+
+A função _split_by_labels_  recebe as amostras de treinamento e as separa em 3 grupos de acordo com seus rótulos.
+
+.split_by_labels
+[source,python]
+----
+def split_by_labels(array):
+    L1=array[array[:,array.shape[1]-1]==1]
+    L2=array[array[:,array.shape[1]-1]==2]
+    L3=array[array[:,array.shape[1]-1]==3]
+    return L1,L2,L3
+----
+
+Em seguida, utilizou-se a função _sample_centrois_ para calcular os centroides de cada rótulo de forma individual à partir da média de cada um dos atributos das amostras de mesmo rótulo.
+
+.sample_centroids
+[source,python]
+----
+def sample_centroids(data):
+    m=np.empty((data.shape[1] -1),dtype=float)
+    for i in range (0,data.shape[1]-1):
+        m[i]=np.mean(data[:,i],dtype=np.float64)
+    return m
+----
+
+Uma vez tendo as coordenadas de cada um dos centroids, implementou-se a função _Rocchio_ , que calcula a distância de cada amostra de teste e atualiza seu rótulo com o centróid que está mais próximo dela.
+
+.Rocchio
+[source,python]
+----
+def rocchio(data,Center_1,Center_2,Center_3):
+    labels=[]
+    euclidian=np.empty((3),dtype = float)
+    for i in range(0,data.shape[0]):
+        for j in range(0,(data.shape[1]-1)):
+            euclidian[0]=np.sqrt(np.power(np.sum(Center_1[j]-data[i,j]),2))
+            euclidian[1]=np.sqrt(np.power(np.sum(Center_2[j]-data[i,j]),2))
+            euclidian[2]=np.sqrt(np.power(np.sum(Center_3[j]-data[i,j]),2))
+            
+        if(np.min(euclidian)==euclidian[0]):
+            labels.append(1)
+        elif(np.min(euclidian)==euclidian[1]):
+            labels.append(2)
+        else:
+            labels.append(3)
+    return labels
+----
+
+Ao final, calculou-se a acurácia deste algorítmo e obteve-se o seguinte resultado, exposto na Tabela 1:
+
+.Resultados NN e Rocchio: questão a.
+[%header,cols=2*] 
+|===
+|Algoritmo
+|Acurácia
+
+|NN
+|76.00%
+
+|Rocchio
+|96.00%
+|===
+
+=== Solução 1.b ===
+
+Para esta questão utilizou-se o arredondamento dos dados como solução para o ruído, transformando números decimais em números inteiros. Dando continuidade ao pre-processamento de dados que foi feito na letra a, utilizou-se o artifício de substituição de valores fora da faixa (outliers) pela moda do atributo no qual o mesmo se encontra, implementação realizada na função _replace_by_mode_. 
+
+.replace_by_mode
+[source,python]
+----
+def replace_by_mode(array):
+    for i in range(0,array.shape[1]-1):
+        while (i==0):
+            index = np.where((array[:,i]<1) | (array[:,i]>3)) #get indexes
+            index = index[0] #array of indexes
+            m=stats.mode(array[:,i],axis=None) #calculating the mode of this atribute
+            for j in range(0,len(index)):
+                array[index[j],i]=int(m[0])
+            i=1
+        
+        index = np.where((array[:,i]<1) | (array[:,i]>4))
+        index = index[0]
+        m=stats.mode(array[:,i],axis=None)
+        for j in range(0,len(index)):
+            array[index[j],i]=int(m[0])
+    return array
+----
+
+Os resultados obtidos com esse tipo de abordagem estão expostos na Tabela 2:
 
 
+.Resultados NN e Rocchio: questão b
+[%header,cols=2*] 
+|===
+|Algoritmo
+|Acurácia
 
+|NN
+|72.00%
 
+|Rocchio
+|100.00%
+|===
 
+=== Solução 1.c  ===
 
+Comparando as Tabelas 1 e 2, nota-se para essa base de dados, o algoritmo Rocchio teve uma acurácia melhor do que o NN nos dois casos. O pre-processamento dos dados conseguiu otimizar a tarefa de classificação para o algoritmo Rocchio, trazendo um resultado de 100%, após a detecção e substituição dos outiliers e a eliminação do ruído.

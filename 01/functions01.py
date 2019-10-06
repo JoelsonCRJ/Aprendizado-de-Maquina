@@ -59,7 +59,6 @@ def accuracy(labels,prediction):
     return (count/len(labels))*100
 
 def replace_by_mode(array):
-    
     for i in range(0,array.shape[1]-1):
         while (i==0):
             index = np.where((array[:,i]<1) | (array[:,i]>3)) #get indexes
