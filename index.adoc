@@ -183,3 +183,7 @@ Os resultados obtidos com esse tipo de abordagem estão expostos na Tabela 2:
 === Solução 1.c  ===
 
 Comparando as Tabelas 1 e 2, nota-se para essa base de dados, o algoritmo Rocchio teve uma acurácia melhor do que o NN nos dois casos. O pre-processamento dos dados conseguiu otimizar a tarefa de classificação para o algoritmo Rocchio, trazendo um resultado de 100%, após a detecção e substituição dos outiliers e a eliminação do ruído.
+
+*Arquivos*
+
+|| link:01/01.py[01.py]  || link:01/functions01.py[functions01.py] ||
