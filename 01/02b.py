@@ -1,17 +1,22 @@
 import pandas as pd
 import numpy as np
 
-
-
- 
-
-def get_x(array):
+def get_x_trainning(array):
     X=np.zeros((array.shape[0],array.shape[1]),dtype = np.float32)
     for i in range(0,array.shape[0]):
         for j in range(0, array.shape[1]):
             X[i][j]=(array[i][j] - np.mean(array[:,j],dtype=np.float32))/np.std(array[:,j],dtype=np.float32)
         
     return X
+
+def get_x_test(array_test,array_trainning):
+    X=np.zeros((array_test.shape[0],array_test.shape[1]),dtype = np.float32)
+    for i in range(0,array_test.shape[0]):
+        for j in range(0, array_test.shape[1]):
+            X[i][j]=(array_test[i][j] - np.mean(array_trainning[:,j],dtype=np.float32))/np.std(array_trainning[:,j],dtype=np.float32)
+        
+    return X
+
 
 def reduce_percent(array,stop_condititon):
     total=0
@@ -27,7 +32,7 @@ def NN(trainning_array,test_array,labels_column):
     for i in range(0,test_array.shape[0]):
         distances=np.zeros((len(trainning_array)))
         for z in range(0,trainning_array.shape[0]):
-            distances[z]=np.sqrt(np.sum(np.power(np.subtract(test_array[i,1:test_array.shape[1]],trainning_array[z,1:trainning_array.shape[1]]),2)))
+            distances[z]=np.sqrt(np.sum(np.power(np.subtract(test_array[i,0:test_array.shape[1]],trainning_array[z,1:trainning_array.shape[1]]),2)))
         #min[0] = index of min value and min[1] is the min value
         #print(distances)
         distances = list(distances)
@@ -50,7 +55,7 @@ data = np.array(data)
 trainning_data = data[0:300,:]
 test_data = data[300:data.shape[0],:]
 
-X_til = get_x(trainning_data[:,2:trainning_data.shape[1]]) # atributo 1 ate o final 
+X_til = get_x_trainning(trainning_data[:,2:trainning_data.shape[1]]) # atributo 1 ate o final 
 X_til_transposed = X_til.transpose()
 N=300 # tirando dois primeiros atributos pois são irrelevantes
 C=(1/(N-1))*(X_til_transposed.dot(X_til))
@@ -61,8 +66,6 @@ autovalores = L[0]
 autovetores = L[1]
 # print(autovalores)
 # print(np.sum(autovalores))
-
-
 percentagem,componentes = reduce_percent(autovalores,0.9)
 
 # print(percentagem)
@@ -84,6 +87,11 @@ trainning_PCA= np.array(dataset)
 #print(trainning_PCA.shape)
 #print(test_data.shape)
 labels_vector=test_data[:,0]
-prediction_vector_NN=NN(trainning_PCA,test_data[:,0:6],0)
+
+#aplicando PCA nos dados de teste
+X_til_test = get_x_test(test_data[:,2:test_data.shape[1]],trainning_data[:,2:trainning_data.shape[1]])
+test_PCA =X_til_test.dot(autovetores_selecionados)
+
+prediction_vector_NN=NN(trainning_PCA,test_PCA,0)
 accuracy_NN=accuracy(labels_vector,prediction_vector_NN)
 print("Accuracy using NN: {0:.2f}%".format( accuracy_NN))
