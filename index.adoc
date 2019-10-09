@@ -187,3 +187,6 @@ Comparando as Tabelas 1 e 2, nota-se para essa base de dados, o algoritmo Rocchi
 *Arquivos*
 
 || link:01/01.py[01.py]  || link:01/functions01.py[functions01.py] ||
+
+
+image::tiger.png[Tiger,200,200,float="right",align="center"]
