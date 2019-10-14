@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
+from itertools import combinations 
 
 #-------functions
 
@@ -21,7 +22,23 @@ def RSS(real_data,real_x,calculated_data,calculated_t):
                 quadratic_error = quadratic_error + np.power((real_data[i]-calculated_data[j]),2)
     return quadratic_error
 
-
+def get_tal(a1,a2,combinations):
+    positivos = 0
+    negativos = 0
+    matrix = 0
+    for i in range(combinations.shape[0]):
+        matrix=(a1[combinations[i][0]]-a1[combinations[i][1]])*(a2[combinations[i][0]]-a2[combinations[i][1]])
+        if(matrix>0):
+            positivos = positivos +1
+        else:
+            negativos=negativos+1
+    print(positivos)
+    print(negativos)
+    
+    N=(a1.size*(a1.size-1))/2
+    print(N)
+    tal = (positivos-negativos)/(N)
+    return tal
 
 #-----------------------
 
@@ -71,6 +88,19 @@ print('O valor do resultado para o ano de 2020 é de: {0:.2f} m/s'.format(f_2020
 print('-----')
 #-------letra c ------
 
-RSS = RSS(y,x,f,t)
-print(RSS)
- #falta a letra c e d 
+combinations = np.array(list(combinations(np.arange(0,29),2)))
+print(combinations.shape[0])
+tal=get_tal(x,y,combinations)
+tal=abs(tal)
+print(tal)
+
+z_5p = 1.96
+z_1p = 2.33
+
+
+
+
+            
+
+
+
