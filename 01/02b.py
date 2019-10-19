@@ -55,16 +55,17 @@ data = np.array(data)
 trainning_data = data[0:300,:]
 test_data = data[300:data.shape[0],:]
 
-X_til = get_x_trainning(trainning_data[:,2:trainning_data.shape[1]]) # atributo 1 ate o final 
+X_til = get_x_trainning(trainning_data[:,1:trainning_data.shape[1]]) # atributo 1 ate o final 
 X_til_transposed = X_til.transpose()
 N=300 # tirando dois primeiros atributos pois são irrelevantes
 C=(1/(N-1))*(X_til_transposed.dot(X_til))
+print(C)
 L=np.linalg.eigh(C,UPLO = 'U')
 #L[0] - vetor de autovalores em ordem crescente
 #L[1] - matriz com os autovetores relacionados aos autovalores
 autovalores = L[0]
 autovetores = L[1]
-# print(autovalores)
+#print(autovalores)
 # print(np.sum(autovalores))
 percentagem,componentes = reduce_percent(autovalores,0.9)
 
@@ -89,7 +90,7 @@ trainning_PCA= np.array(dataset)
 labels_vector=test_data[:,0]
 
 #aplicando PCA nos dados de teste
-X_til_test = get_x_test(test_data[:,2:test_data.shape[1]],trainning_data[:,2:trainning_data.shape[1]])
+X_til_test = get_x_test(test_data[:,1:test_data.shape[1]],trainning_data[:,1:trainning_data.shape[1]])
 test_PCA =X_til_test.dot(autovetores_selecionados)
 
 prediction_vector_NN=NN(trainning_PCA,test_PCA,0)
