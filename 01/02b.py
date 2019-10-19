@@ -59,7 +59,7 @@ X_til = get_x_trainning(trainning_data[:,1:trainning_data.shape[1]]) # atributo 
 X_til_transposed = X_til.transpose()
 N=300 # tirando dois primeiros atributos pois são irrelevantes
 C=(1/(N-1))*(X_til_transposed.dot(X_til))
-print(C)
+
 L=np.linalg.eigh(C,UPLO = 'U')
 #L[0] - vetor de autovalores em ordem crescente
 #L[1] - matriz com os autovetores relacionados aos autovalores

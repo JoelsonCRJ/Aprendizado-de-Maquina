@@ -1,5 +1,6 @@
 :source-highlighter: pygments 	
-:imagesdir: ./figures
+:imagesdir: ./01
+
 :stem:
 
 = PGEE-5574: Tópicos Especiais em Processamento de Sinais: Aprendizado de Máquina
@@ -188,5 +189,102 @@ Comparando as Tabelas 1 e 2, nota-se para essa base de dados, o algoritmo Rocchi
 
 || link:01/01.py[01.py]  || link:01/functions01.py[functions01.py] ||
 
+=== Questão 2 ===
+Dada a base de dados Breast Cancer Wisconsin (Diagnostic) (baixar em
+https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)):
 
-image::tiger.png[Tiger,200,200,float="right",align="center"]
+a) Obtenha a acurácia de classificação quando usando o classificador vizinho mais
+próximo (NN) (utilize a distância Euclidiana). Use os dados do arquivo wdbc.data,
+sendo as primeiras 300 amostras para treino e as demais para teste. Antes, repare os
+atributos da base de dados e a posição dos rótulos. Quais atributos você pode eliminar
+da base de dados antes do experimento? Por quê?
+
+b) Aplique o PCA sobre os dados de treino e selecione o número de componentes até eles
+corresponderem a 90% da informação de variância dos dados (conforme mostrado nos
+slides). Quantos componentes foram selecionados? Calcule a nova acurácia do NN
+usando as componentes selecionadas. O resultado alterou de forma significativa em
+relação ao obtido em a)? Qual foi a vantagem observada usando PCA?
+
+c) Outra técnica para redução de dimensionalidade, mas de forma supervisionada, é o
+Discriminante Linear de Fisher (para duas classes) e a sua versão multiclasse. Quando
+aplicado este método o tamanho do vetor de características é reduzido para C-1, onde
+C é o número de classes do problema. Seguindo os slides de
+http://www.csd.uwo.ca/~olga/Courses/CS434a_541a/Lecture8.pdf (há um exemplo
+no meio), obtenha os novos dados após a aplicação de Fisher sobre os dados de treinoe obtenha a acurácia do NN sobre o conjunto de teste. Quais as vantagens desta abordagem sobre o PCA?
+
+=== Solução 2.a  ===
+
+Foram excluídas as duas primeiras colunas, pois elas dizem respeito ao ID e ao diagnóstico, variável alvo. Dessa forma,  se dividiu a base de dados conforme o enunciado e aplicou-se o algorítmo NN para a tarefa de classificação. Obtendo acurácia de *88.48%*.
+
+=== Solução 2.b  ===
+
+Para essa questão utilizou-se o cálculo da matriz de coeficientes de correlação, dessa forma o primeiro algoritmo implementado foi o para calcular a matriz stem:[\hat{X}], descrito abaixo:
+
+[stem] 
+++++ 
+\hat{X}_{i,j}=\frac{X_{i,j}-\mu_{j}}{\sigma_{j}}
+++++
+
+Em seguida, se calculou a matriz de coeficientes de correlação stem:[C], com stem:[N=300]:
+
+[stem]
+++++
+C=\frac{1}{(N-1)}\hat{X}^{T}\hat{X}
+++++
+
+O próximo passo foi extrair os autovalores e autovetores da matriz stem:[C]. Para tal, utilizou-se a função https://docs.scipy.org/doc/numpy-1.15.1/reference/generated/numpy.linalg.eigh.html[numpy.linalg.eigh]. Para se encontrar o número de componentes que correspondem a *90%* da informação da variância dos dados, criou-se a função _reduce_percent_ , que soma os autovalores de forma decrescente até que o somatório relativo seja equivalente à condição de parada fornecida  pelo usuário (*90%*).
+
+.reduce_percent
+[source,python]
+----
+def reduce_percent(array,stop_condititon):
+    total=0
+    full=np.sum(array)
+    for i in range(array.size-1,1,-1):
+        total=total+(total+array[i])/full
+        #print(total)
+        if(total >= stop_condititon):
+            return (total,abs(i-array.size))
+----
+
+Para essa base de dados, foram encontradas 5 componentes principais. Dessa forma, cria-se uma matriz com os autovetores associados aos 5 maiores autovalores encontrados (stem:[V_{30x5}]). Para se encontrar a nova matriz de amostras de treinamento com as 5 componentes principais,basta multiplicar a matriz stem:[\hat{X}_{300x30}] pela matriz stem:[V_{30x5}], resultando na matriz stem:[Mtr_{300x5}].
+
+Para se encontrar a matriz de teste com as 5 principais componentes, basta se repetir o processo, porém utilizando o stem:[\mu] e stem:[\sigma] dos atributos da base de dados de treino.
+
+A acurácia para a tarefa de classificação através do algorítmo NN com o conjunto de dados novo teve o valor de *72.12%*, uma diferença de *16.43%* do resultado para o conjunto de dados original.É importante ressaltar que o algoritmo PCA reduziu a dimensionalidade desse conjunto de dados em aproximadamente *6 vezes*, mantendo parte da informação contida nos dados originais (reduzindo-a em apenas *10%*), e tendo um resultado satisfatório.
+
+*Arquivos*
+
+|| link:01/02a.py[02a.py]  || link:01/02b.py[02b.py] || link:01/functions02.py[functions02.py] ||
+ 
+=== Regressão Linear ===
+
+=== Questão 3 ===
+Para a base de dados link:01/Runner_num.txt[Runner] obtenha:
+
+a) A equação linear que se ajusta aos dados e a RMSE;
+
+b) Predizer o resultado para o ano de 2020;
+
+c) Utilize o teste de hipótese de Kendall para verificar se existe dependência entre os atributos. Realize o teste para 5% e 1% de nível de significância. Informe os resultados;
+
+d) Calcule o coeficiente de correlação entre os dados e realize o teste de hipótese de Pearson para 5% e 1% de nível de significância (teste bilateral). Informe os resultados.
+
+=== Solução 3.a  ===
+
+Inicialmente observou-se que a distribuição dos dados se assemelha a uma reta, polinômio de primeiro grau, conforme a Figura 1:
+
+.Tempo dos corredores dos 100 metros livres das olimpíadas
+image::03a_1.svg[a,600,opts=inline]
+
+Dessa forma, realizou-se a regressão linear de primeiro grau para a base de dados. Os cálculos para encontrar os coefienteces stem:[w_{0}] e stem:[w_{1}] seguem abaixo:
+
+[stem]
+++++
+w_{1} = \frac{\bar{xt}-\bar{x}\bar{t}}{\bar{x^{2}}-(\bar{x})^{2}}
+++++
+
+[stem]
+++++
+w_{0}=\bar{t}-w_{1}\bar{x}
+++++

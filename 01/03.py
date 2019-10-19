@@ -58,9 +58,11 @@ data = np.array(data)
 
 x=data[:,0]
 y=data[:,1]
-#plt.figure(0)
-#plt.plot(x,y,'o')
-#plt.savefig('03a_1.svg', format='svg',dpi=300 )
+plt.figure(0)
+plt.plot(x,y,'o')
+plt.xlabel('Ano')
+plt.ylabel('Tempo (s)')
+plt.savefig('03a_1.svg', format='svg',dpi=300 )
 
 x_mean=np.mean(x,dtype=np.float32)
 
@@ -73,14 +75,17 @@ x_mean_2=np.power(x_mean,2)
 w1=(x_y_mean-(x_mean*y_mean))/(x_2_mean-x_mean_2)
 
 w0=y_mean-w1*x_mean
-#print(w1)
+print(w1)
+print(w0)
 t=np.arange(x[0],x[-1]+1)
 f=np.zeros((1,t.size))
         
 f=w0+w1*t
-#plt.figure(1)
-#plt.plot(t,f,'r',x,y,'o')
-#plt.savefig('03a_2.svg', format='svg',dpi=300 )
+plt.figure(1)
+plt.plot(t,f,'r',x,y,'o')
+plt.xlabel('Ano')
+plt.ylabel('Tempo (s)')
+plt.savefig('03a_2.svg', format='svg',dpi=300 )
 
 
 
@@ -91,7 +96,7 @@ print('Erro RMSE: {0:.2f}%'.format(RMSE*100))
 print('-----')
 #------ letrab------
 f_2020=w0+w1*(2020)
-print('O valor do resultado para o ano de 2020 é de: {0:.2f} m/s'.format(f_2020))
+print('O valor do resultado para o ano de 2020 é de: {0:.2f} s'.format(f_2020))
 print('-----')
 #-------letra c ------
 
