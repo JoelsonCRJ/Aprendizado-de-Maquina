@@ -516,6 +516,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_solução_3_b">Solução 3.b</a></li>
 <li><a href="#_solução_3_c">Solução 3.c</a></li>
 <li><a href="#_solução_3_d">Solução 3.d</a></li>
+<li><a href="#_questão_4">Questão 4</a></li>
+<li><a href="#_solução_4_a">Solução 4.a</a></li>
+<li><a href="#_solução_4_b">Solução 4.b</a></li>
 </ul>
 </li>
 </ul>
@@ -2892,12 +2895,60 @@ z
 <p>|| <a href="01/03.py">03.py</a>  ||</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_questão_4">Questão 4</h3>
+<div class="paragraph">
+<p>Para a base de dados Auto MPG (disponibilizada em <a href="https://archive.ics.uci.edu/ml/datasets/Auto+MPG" class="bare">https://archive.ics.uci.edu/ml/datasets/Auto+MPG</a>) faça:</p>
+</div>
+<div class="paragraph">
+<p>a) Baixe o arquivo auto-mpg.data, remova as linhas que tem interrogação (?) e remova a última coluna (por quê?). Com as 150 primeiras linhas obtenha um modelo de regressão linear multivariada para predizer o valor da primeira variável (mpg). Avalie o resultado sobre o restante da base de dados, usando a métrica RMSE.</p>
+</div>
+<div class="paragraph">
+<p>b) Verifique quais são os atributos que estão relacionados com a saída: A partir dos coeficientes obtidos, aplique o teste F de Snedecor sobre cada variável individualmente (conforme nos slides). Indique quais foram os atributos que podem ser desconsiderados. Obtenha sobre o restante da base de dados a métrica RMSE com o modelo sem considerar esses atributos (não precisa estimar um novo modelo, só considere os valores dos coeficientes deles iguais a zero). Compare os resultados obtidos em a) e em b). Considere que os resíduos do modelo possui distribuição aproximadamente normal e que \$F_{1,142} = 3,908\$.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_4_a">Solução 4.a</h3>
+<div class="paragraph">
+<p>As amostras com dados faltantes ("?") foram excluídas e o último atributo também, já que não apresenta nenhuma informação relevante para a tarefa de classificação, pois o modelo do carro não intefere em suas características.</p>
+</div>
+<div class="paragraph">
+<p>A rotina para a regressão foi elaborada por meio matricial, sendo possível estimar a matriz de coeficientes “W”. De posse dessa matriz foi possível calcular o vetor de saídas desejadas “t”.</p>
+</div>
+<div class="paragraph">
+<p>Ao se aplicar a métrica RMSE sobre o conjunto de dados de teste foi encontrado o resultado de <strong>6.247</strong>.Tendo em vista que o RMSE penaliza grandes desvios entre o valor real e o estimado,para essa base de testes ele demonstrou um bom ajuste dos
+dados ao modelo proposto.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_4_b">Solução 4.b</h3>
+<div class="paragraph">
+<p>Para saber se um atributo (ou conjunto de atributos) está contribuindo ou não ao modelo é
+necessário se fazer o teste estatístico entre o modelo obtido com e sem o atributo analisado (teste F de
+Snedecor).</p>
+</div>
+<div class="paragraph">
+<p>Para a elaboração desse teste, primeiro foi feito o modelo com todos os atributos e depois, cada atributo era eliminado, por vez, e calculava novamente o modelo. De posse dos valores encontrados é possível comparar qual ou quais atributos podem ser descartados. Esta
+comparação é feita com o valor de 3,908, referente a distribuição normal dos dados. Sendo assim, os atributos eliminados foram os atributos 3 (x2) e 6 (x5), displacement e acceleration respectivamente.</p>
+</div>
+<div class="paragraph">
+<p>Após a eliminação dos atributos selecionados, o novo valor de RMSE foi de 6,099, um valor
+ligeiramente abaixo dos 6,247 apurados, utilizando todos os atributos. Esse resultado
+confirma que os dois atributos eliminados não estavam contribuindo para a classificação.</p>
+</div>
+<div class="paragraph">
+<p><strong>Arquivos</strong></p>
+</div>
+<div class="paragraph">
+<p>|| <a href="01/04.py">04.py</a>  ||</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-19 17:21:17 -03
+Last updated 2019-10-19 18:01:55 -03
 </div>
 </div>
 <script type="text/x-mathjax-config">
