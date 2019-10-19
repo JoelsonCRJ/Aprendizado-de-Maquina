@@ -413,3 +413,7 @@ Para 1%:
 ++++
 
 A hipótese nula foi rejeitada para 5%, portanto há confiabilidade de 99%.
+
+*Arquivos*
+
+|| link:01/03.py[03.py]  ||
