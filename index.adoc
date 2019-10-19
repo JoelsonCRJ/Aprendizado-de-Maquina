@@ -274,6 +274,7 @@ d) Calcule o coeficiente de correlação entre os dados e realize o teste de hip
 
 Inicialmente observou-se que a distribuição dos dados se assemelha a uma reta, polinômio de primeiro grau, conforme a Figura 1:
 
+
 .Tempo dos corredores dos 100 metros livres das olimpíadas
 image::03a_1.svg[a,600,opts=inline]
 
@@ -288,3 +289,127 @@ w_{1} = \frac{\bar{xt}-\bar{x}\bar{t}}{\bar{x^{2}}-(\bar{x})^{2}}
 ++++
 w_{0}=\bar{t}-w_{1}\bar{x}
 ++++
+
+A equação de regressão linear que se ajusta ao conjunto de dados tem a seguinte forma e está ilustrada na Figura 2:
+
+[stem]
+++++
+f=35.56 -0.012x
+++++
+
+.Equação de regressão linear stem:[f=35.56 -0.012x]
+image::03a_2.svg[a,600,opts=inline]
+
+Para calcular o erro RMSE utilizou-se a seguinte equação:
+
+[stem]
+++++
+RMSE = \sqrt{\frac{1}{N}\sum_{k=1}^{N} (t_{k}-f(x_{k}))^{2}}
+++++
+
+O resultado obtido foi : RMSE = *22.13%*
+
+=== Solução 3.b ===
+
+Para se predizer o resultado para o ano de 2020, simplesmente se substituiu o valor 2020 na equação:
+
+[stem]
+++++
+f(2020)=35.56 -0.012(2020)
+++++
+
+O resultado obtido foi: f(2020) = 9.53 s
+
+=== Solução 3.c ===
+
+Para o cálculo do stem:[\tau], utiliza-se a seguinte fórmula:
+
+[stem]
+
+++++
+\tau = \frac{\sum_{i=2}^{N} \sum_{j=1}^{i-1} sgn(x_{j}-x_{i})sgn(y_{j}-y_{i})}{\sqrt{n_{x}}\sqrt{n_{y}}}
+++++
+
+Tal fórmula foi implementada com o auxílio da função  https://docs.python.org/2/library/itertools.html[itertools] para  criar uma lista com combinações entre os índices dos dois arrays. Em seguida criou-se a função _get_tal_ para calcular o stem:[\tau] .
+
+.get_tal
+[source,python]
+----
+def get_tal(a1,a2,combinations):
+    positivos = 0
+    negativos = 0
+    matrix = 0
+    for i in range(combinations.shape[0]):
+        matrix=(a1[combinations[i][0]]-a1[combinations[i][1]])*(a2[combinations[i][0]]-a2[combinations[i][1]])
+        if(matrix>0):
+            positivos = positivos +1
+        else:
+            negativos=negativos+1
+   
+    N=(a1.size*(a1.size-1))/2
+
+    tal = (positivos-negativos)/(N)
+    return tal
+----
+
+O valor de stem:[\tau] calculado foi de : stem:[|\tau|] = 0.87. Pela tabela de distribuição de  T de Student: stem:[z_{1-\frac{0.05}{2}}=1.96] e stem:[z_{1-\frac{0.01}{2}}= 2.33]. Substituindo seus valores na equação para o teste de hipótese dos coeficientes de correlação de Kendall, tem-se:
+
+Para 5%:
+[stem]
+++++
+|\tau| > 1.96 \sqrt{\frac{2(2N+5)}{9N(N-1)}} 
+
+\rightarrow 0.87 > 0.26
+++++
+
+Portanto, a hipótese nula foi rejeitada para 5% e existe a possibilidade de haver dependência entre x e y com 95% de significância.
+
+Já para 1%:
+
+[stem]
+++++
+|\tau| > 2.33 \sqrt{\frac{2(2N+5)}{9N(N-1)}} 
+
+\rightarrow 0.87 > 0.31
+++++
+
+Portanto, a hipótese nula foi rejeitada para 1% e existe a possibilidade de haver dependência entre x e y com 99% de significância.
+
+
+=== Solução 3.d ===
+
+Para realizar o teste de hipótese pelo coeficiente de correlação de Pearson, primeiramente foi obtido o valor P, coeficietne de correlação entre dois atributos, utilizando-se a seguinte fórmula:
+
+[stem]
+++++
+P=\frac{cov(x,y)}{\sqrt(var(x))\sqrt(var(y))} \rightarrow P = -0.91
+++++
+
+Nota-se que o valor de P se encontra próximo ao valor -1, o que significa que a correlação linear é quase perfeita negativa entre x e y.
+
+Em seguida, calcula-se a estatística do teste:
+
+[stem]
+++++
+t_{0}=\frac{\hat{p}\sqrt{N-2}}{\sqrt(1-\hat{p}^{2})} \rightarrow t_{0}= -11.26
+++++
+
+Substituindo seu valor e os valores de stem:[t_{\frac{0.05}{2},N-2} =2.052] e stem:[t_{\frac{0.01}{2},N-2} =2.771] fórmula para hipótese nula rejeita, tem-se:
+
+Para 5%:
+
+[stem]
+++++
+|t_{0}|>2.052 \rightarrow 11.26 > 2.052
+++++
+
+A hipótese nula foi rejeitada para 5%, portanto há confiabilidade de 95%.
+
+Para 1%:
+
+[stem]
+++++
+|t_{0}|>2.771 \rightarrow 11.26 > 2.771
+++++
+
+A hipótese nula foi rejeitada para 5%, portanto há confiabilidade de 99%.

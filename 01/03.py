@@ -82,7 +82,9 @@ f=np.zeros((1,t.size))
         
 f=w0+w1*t
 plt.figure(1)
-plt.plot(t,f,'r',x,y,'o')
+plt.plot(t,f,'r',label='f=35.56 -0.012x')
+plt.plot(x,y,'o',label='amostras')
+plt.legend(loc='best')
 plt.xlabel('Ano')
 plt.ylabel('Tempo (s)')
 plt.savefig('03a_2.svg', format='svg',dpi=300 )
