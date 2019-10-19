@@ -417,3 +417,37 @@ A hipótese nula foi rejeitada para 5%, portanto há confiabilidade de 99%.
 *Arquivos*
 
 || link:01/03.py[03.py]  ||
+
+=== Questão 4 === 
+Para a base de dados Auto MPG (disponibilizada em https://archive.ics.uci.edu/ml/datasets/Auto+MPG) faça:
+
+a) Baixe o arquivo auto-mpg.data, remova as linhas que tem interrogação (?) e remova a última coluna (por quê?). Com as 150 primeiras linhas obtenha um modelo de regressão linear multivariada para predizer o valor da primeira variável (mpg). Avalie o resultado sobre o restante da base de dados, usando a métrica RMSE.
+
+b) Verifique quais são os atributos que estão relacionados com a saída: A partir dos coeficientes obtidos, aplique o teste F de Snedecor sobre cada variável individualmente (conforme nos slides). Indique quais foram os atributos que podem ser desconsiderados. Obtenha sobre o restante da base de dados a métrica RMSE com o modelo sem considerar esses atributos (não precisa estimar um novo modelo, só considere os valores dos coeficientes deles iguais a zero). Compare os resultados obtidos em a) e em b). Considere que os resíduos do modelo possui distribuição aproximadamente normal e que stem:[F_{1,142} = 3,908].
+
+=== Solução 4.a ===
+
+As amostras com dados faltantes ("?") foram excluídas e o último atributo também, já que não apresenta nenhuma informação relevante para a tarefa de classificação, pois o modelo do carro não intefere em suas características. 
+
+A rotina para a regressão foi elaborada por meio matricial, sendo possível estimar a matriz de coeficientes “W”. De posse dessa matriz foi possível calcular o vetor de saídas desejadas “t”.
+ 
+Ao se aplicar a métrica RMSE sobre o conjunto de dados de teste foi encontrado o resultado de *6.247*.Tendo em vista que o RMSE penaliza grandes desvios entre o valor real e o estimado,para essa base de testes ele demonstrou um bom ajuste dos
+dados ao modelo proposto.
+
+=== Solução 4.b ===
+
+Para saber se um atributo (ou conjunto de atributos) está contribuindo ou não ao modelo é
+necessário se fazer o teste estatístico entre o modelo obtido com e sem o atributo analisado (teste F de
+Snedecor). 
+
+Para a elaboração desse teste, primeiro foi feito o modelo com todos os atributos e depois, cada atributo era eliminado, por vez, e calculava novamente o modelo. De posse dos valores encontrados é possível comparar qual ou quais atributos podem ser descartados. Esta
+comparação é feita com o valor de 3,908, referente a distribuição normal dos dados. Sendo assim, os atributos eliminados foram os atributos 3 (x2) e 6 (x5), displacement e acceleration respectivamente.
+
+Após a eliminação dos atributos selecionados, o novo valor de RMSE foi de 6,099, um valor
+ligeiramente abaixo dos 6,247 apurados, utilizando todos os atributos. Esse resultado
+confirma que os dois atributos eliminados não estavam contribuindo para a classificação.
+
+
+*Arquivos*
+
+|| link:01/04.py[04.py]  ||
