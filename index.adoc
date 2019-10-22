@@ -534,4 +534,6 @@ Pois, conforme o enunciado cita, há um número baixo de amostras classificadas 
 
 === Solução 5.b ===
 
+
+
 Reduzir o número de amostras sem defeito, com a finalidade de garantir o correto balanceamento dos dados.
