@@ -451,3 +451,87 @@ confirma que os dois atributos eliminados não estavam contribuindo para a class
 *Arquivos*
 
 || link:01/04.py[04.py]  ||
+
+
+=== Questões Teóricas === 
+
+=== Questão 1 ===
+
+Explique o dilema entre bias e variância e o seu relacionamento com underfitting e
+overfitting.
+=== Solução Questão 1 ===
+
+Bias pode ser definido como a diferença entre o valor esperado calculado através do modelo desenvolvido e  o real na qual. Ele está diretamente associado à habilidade que o modelo desenvolvido tem em se ajustar conjunto de dados. Um modelo pode ser dito com um alto bias quando a sua estrutura não descreve corretamente os dados. Em resumo, Bias é o erro que ocorre ao tentar aproximar o comportamento dos dados.
+
+Quando um modelo tem uma alta variância ele representa muito bem os dados, porém ao se trocar o conjunto de dados é comum que o resultado não seja satisfatório para a predição. A variância está associada com a quantidade na qual o modelo será alterado conforme um conjunto diferente.
+
+O Bias, nos permite entender o comportamento do modelo e nos dá a possibilidade de tomar ações corretivas. Quando o modelo tem um alto bias significa que pode-se adicionar mais atributos para melhorar a tarefa de classificação. No caso de alta variância, uma alternativa é redução de atributos, ou inclur mais amostras.
+
+=== Questão 2 ===
+
+Comente sobre a veracidade das afirmações:
+
+a)“Quanto mais variáveis de entrada forem usadas em um modelo de aprendizado de
+máquina, melhor será a qualidade do modelo”.
+
+b)“Independente da qualidade, quanto mais amostras forem obtidas para uma base de
+dados, maior a tendência de se obter modelos mais adequados”.
+
+c)“Às vezes com simples manipulações na base de dados (limpeza, conversão de valores, etc.) pode-se conseguir melhoras significativas nos resultados, sem fazer nenhuma alteração na técnica de aprendizado de máquina usada”.
+
+=== Solução 2.a === 
+
+A afirmação está errada. Isto pode ser observado na questão 02.b. O conjunto inicial possui 30 atributos. Aplicou-se o PCA sobre o esse conjunto e obteve-se a mesma acurária próxima ao do conjunto original na questão 02.a. O importante é se reduzir o conjunto original, porém mantendo a relação entre as amostras.
+
+=== Solução 2.b === 
+
+A afirmação está errada, pois não se basta ter um grande número de amostras sem nenhum tipo de pré-processamento. Ao não se aplicar um pré-processamento no conjunto de dados, se corre o grande risco de realizar tarefas de classificação ambíguas, pois não se garante a qualidade dos dados.
+
+=== Solução 2.c === 
+
+A afirmação está correta. O pré-processamento de dados tem a capacidade de otimizar o procedimento de classificação e garantir que não haverá resultado distorcido.
+
+=== Questão 3 ===
+
+Em certas tarefas de aprendizado supervisionado as amostras de diferentes classes aparecem com sobreposição, de tal forma que não é possível obter uma superfície que separe de forma adequada as amostras das diferentes classes. O que se poderia fazer nestas situações para tentar melhorar a qualidade de classificação?
+
+=== Solução Questão 3 ===
+
+É possível realizar testes sobre a relação linear dos atributos para saber quais realmente influenciam ou não no comportamento dos dados com a finalidade de remover algum atributo que possa estar contribuindo diretamente para essa situação.
+
+=== Questão 4 ===
+
+Quais devem ser as características que uma base de dados deve ter para:
+
+a) Uma regressão linear se ajustar bem aos dados?
+b) O classificador Rocchio conseguir um bom resultado de classificação?
+c) O classificador Vizinho mais Próximo conseguir um bom resultado de classificação?
+
+=== Solução 4.a ===
+
+Haver uma boa identificação do polinômio interpolador, baseado na observação dos dados, e que seja comprovada, através de testes de hipótese,
+a interdependência dos atributos.
+
+=== Solução 4.b ===
+
+Uma base de dados com todas as classes balanceadas igualmente.
+
+=== Questão 5 ===
+
+Em uma empresa é adotado um método de Aprendizado de Máquina para detectar
+defeito de fabricação de peças mecânicas, sendo que raramente acontece este tipo de
+problema na fábrica. Um funcionário anuncia empolgado que o sistema alcançou uma
+acurácia de 99%, porém seu gerente não achou o resultado tão relevante. Responda:
+
+a) Por que o gerente não ficou empolgado com o resultado achado?
+
+b) O que o funcionário poderia fazer para confirmar se o método empregado é adequado
+para o problema?
+
+=== Solução 5.a ===
+
+Pois, conforme o enunciado cita, há um número baixo de amostras classificadas como defeituosas em relação ao número de amostras sem defeito. Dessa forma, o conjunto de dados está desbalanceado tendo como resultado favorável a classe majoritária.
+
+=== Solução 5.b ===
+
+Reduzir o número de amostras sem defeito, com a finalidade de garantir o correto balanceamento dos dados.
