@@ -535,6 +535,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_solução_5_b">Solução 5.b</a></li>
 </ul>
 </li>
+<li><a href="#_lista_2">Lista 2</a>
+<ul class="sectlevel2">
+<li><a href="#_métodos_de_classificação_baseados_em_probabilidade">Métodos de Classificação Baseados em Probabilidade</a></li>
+<li><a href="#_questão_1_3">Questão 1</a></li>
+<li><a href="#_solução_1_a_2">Solução 1.a</a></li>
+<li><a href="#_solução_1_b_2">Solução 1.b</a></li>
+<li><a href="#_solução_1_c_2">Solução 1.c</a></li>
+<li><a href="#_solução_1_d">Solução 1.d</a></li>
+<li><a href="#_questão_2_3">Questão 2</a></li>
+<li><a href="#_questão_3_3">Questão 3</a></li>
+<li><a href="#_solução_3_a_2">Solução 3.a</a></li>
+<li><a href="#_solução_3_b_2">Solução 3.b</a></li>
+<li><a href="#_solução_3_c_2">Solução 3.c</a></li>
+<li><a href="#_solução_3_d_2">Solução 3.d</a></li>
+<li><a href="#_solução_3_e">Solução 3.e</a></li>
+<li><a href="#_questão_4_3">Questão 4</a></li>
+<li><a href="#_solução_4_a_3">Solução 4.a</a></li>
+<li><a href="#_solução_4_b_3">Solução 4.b</a></li>
+<li><a href="#_solução_4_c">Solução 4.c</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -3079,10 +3100,260 @@ para o problema?</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_lista_2">Lista 2</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_métodos_de_classificação_baseados_em_probabilidade">Métodos de Classificação Baseados em Probabilidade</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_questão_1_3">Questão 1</h3>
+<div class="paragraph">
+<p>Para a base Car Evaluation (disponível em <a href="http://archive.ics.uci.edu/ml/" class="bare">http://archive.ics.uci.edu/ml/</a>), considerando que o primeiro atributo é x1, o segundo é x2 e assim por diante, estime as probabilidades:</p>
+</div>
+<div class="paragraph">
+<p>a)P(x1 =med) e P(x2 = low)</p>
+</div>
+<div class="paragraph">
+<p>b)P(x6=high|x3=2) e P(x2=low|x4=4)</p>
+</div>
+<div class="paragraph">
+<p>c)P(x1=low|x2=low,X5=small) e P(x4=4|x1=med,X3=2)</p>
+</div>
+<div class="paragraph">
+<p>d)P(x2= vhigh,X3=2|X4=2) e P(x3=4,x5=med|x1=med)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_1_a_2">Solução 1.a</h3>
+<div class="paragraph">
+<p>A probabilidade calculada para ambas foi de 25 \$\%\$.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_1_b_2">Solução 1.b</h3>
+<div class="paragraph">
+<p>O resultado obtido para <strong>\$P(x6=high|x3=2)\$</strong> foi de \$33.33\%\$, já para <strong>\$P(x2=low|x4=4)\$</strong> foi de \$25\%\$.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_1_c_2">Solução 1.c</h3>
+<div class="paragraph">
+<p>O resultado obtido para <strong>\$P(x1=low|x2=low,X5=small)\$</strong> foi de \$25.00\%\$, já para <strong>\$P(x4=4|x1=med,X3=2)\$</strong> foi de \$33.33\%\$.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_1_d">Solução 1.d</h3>
+<div class="paragraph">
+<p>O resultado obtido para <strong>\$P(x2=vhigh,X3=2|X4=2)\$</strong> foi de \$6.25\%\$, já para <strong>\$P(x3=4,x5=med|x1=med)\$</strong> foi de \$8.33\%\$.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_questão_2_3">Questão 2</h3>
+<div class="paragraph">
+<p>Aplique o Naive Bayes sobre a base de dados Monk&#8217;s Problems (disponível em <a href="http://archive.ics.uci.edu/ml/" class="bare">http://archive.ics.uci.edu/ml/</a>). Obtenha a acurácia, treinando com monks-2.train e testando em monks-2.test. Realize os experimentos:</p>
+</div>
+<div class="paragraph">
+<p>a) Considerando uma distribuição Gaussiana dos atributos;
+b)Discretizando os valores em intervalos de tamanho 1;
+c)Discretize os valore da mesma forma que em b) usando a suavização de Laplace.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_questão_3_3">Questão 3</h3>
+<div class="paragraph">
+<p>Para a rede bayesiana da figura abaixo, verifique as seguintes afirmações,
+indicando se é falso ou verdadeiro e fornecendo a devida explicação.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./figs/a.png" alt="250" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>a) A é independe de B</p>
+</div>
+<div class="paragraph">
+<p>b)A é independe de B tal que foi observado G</p>
+</div>
+<div class="paragraph">
+<p>c)C é independe de B tal que foi observado H</p>
+</div>
+<div class="paragraph">
+<p>d)G é independente de E tal que foi observado B e I</p>
+</div>
+<div class="paragraph">
+<p>e)G é independente de I tal que foi observado A e B</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_3_a_2">Solução 3.a</h3>
+<div class="paragraph">
+<p>\$A \rightarrow I \leftarrow B\$: caminho bloqueado, pois I não é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>\$A \rightarrow D \rightarrow G \leftarrow B\$:  caminho bloqueado, pois G não é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>\$A \rightarrow C \rightarrow G \leftarrow B\$:  caminho bloqueado, pois G não é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>Dessa forma, A e B são independentes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_3_b_2">Solução 3.b</h3>
+<div class="paragraph">
+<p>Analizando os caminhos que levam de A até B, tem-se:</p>
+</div>
+<div class="paragraph">
+<p>\$A \rightarrow I \leftarrow B\$: caminho bloqueado, pois I não é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>\$A \rightarrow D \rightarrow G \leftarrow B\$:  caminho desbloqueado, pois G é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>\$A \rightarrow C \rightarrow G \leftarrow B\$:  caminho desbloqueado, pois G é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>Dessa forma, A e B não são independentes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_3_c_2">Solução 3.c</h3>
+<div class="paragraph">
+<p>Analizando os caminhos que levam de C até B, tem-se:</p>
+</div>
+<div class="paragraph">
+<p>\$C \leftarrow A \rightarrow I \leftarrow B\$: caminho bloqueado, pois I não é conhecido, logo C e B são bloqueados.</p>
+</div>
+<div class="paragraph">
+<p>\$C \rightarrow G \leftarrow B\$:  caminho bloqueado, pois G não é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>Portanto, C e B são independentes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_3_d_2">Solução 3.d</h3>
+<div class="paragraph">
+<p>Analizando os caminhos que levam de D até E, tem-se:</p>
+</div>
+<div class="paragraph">
+<p>\$G \leftarrow B \rightarrow E\$: caminho bloqueado, pois B é conhecido, logo G e E são bloqueados nesse caminho.</p>
+</div>
+<div class="paragraph">
+<p>\$G \leftarrow D \leftarrow A \rightarrow I \leftarrow B \rightarrow E\$:  caminho bloqueado, pois B é conhecido, logo G e E são bloqueados nesse caminho.</p>
+</div>
+<div class="paragraph">
+<p>\$G \leftarrow D \leftarrow A \rightarrow I \leftarrow H \leftarrow E\$:  caminho desbloqueado, pois H não é conhecido, logo G e E não estão bloqueados nesse caminho.</p>
+</div>
+<div class="paragraph">
+<p>Portanto, G e E não são independentes, pois nem todos os caminhos estão bloqueados.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_3_e">Solução 3.e</h3>
+<div class="paragraph">
+<p>Analizando os caminhos que levam de G até I, tem-se:</p>
+</div>
+<div class="paragraph">
+<p>\$G \leftarrow B \rightarrow I\$: Caminho entre G e I bloqueado, pois B é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>\$G \leftarrow D \leftarrow A \rightarrow I\$: G e I são bloqueados, pois A é conhecido.</p>
+</div>
+<div class="paragraph">
+<p>Dessa forma, G e I são independentes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_questão_4_3">Questão 4</h3>
+<div class="paragraph">
+<p>Dada a rede bayesiana abaixo e a base de dados trânsito.txt, obtenha (na base de dados os valores 0 indicam que o evento não aconteceu, enquanto 1 aconteceu, sendo C chuva, F feriado, E ngarrafamento, R ruas alagadas e A acidente):</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./figs/b.png" alt="250" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>a)As probabilidades condicionais e a priori de cada nó necessários para o uso da
+rede.</p>
+</div>
+<div class="paragraph">
+<p>b)A probabilidade de acontecer acidente tal que foi observado ruas alagadas
+(P(Acidente = 1|Ruas alafgadas = 1))</p>
+</div>
+<div class="paragraph">
+<p>c)A probabilidade de ser feriado tal que foi observado chuva e engarrafamento
+(P(Feriado = 1|Chuva = 1, Engarrafamento = 1))</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_4_a_3">Solução 4.a</h3>
+<div class="paragraph">
+<p>\$P(C) = 47 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$P(F) = 22 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$\frac{P(C)}{P(R = 0, C=0)} = 0.69 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$\frac{P(C)}{P(R = 1, C=0)} = 99.31 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$\frac{P(C)}{P(R = 1, C=1)} = 99.22 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$\frac{P(C)}{P(R = 0, C=1)} = 0.78 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 0, E = 0 , A = 0: 0.87 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 0, E = 0 , A = 1: 99.13 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 0, E = 1 , A = 0: 0.85 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 0, E = 1 , A = 1: 99.14 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 1, E = 0 , A = 0: 0.25 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 1, E = 0 , A = 1: 99.75 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 1, E = 1 , A = 0: 0.14 \%\$</p>
+</div>
+<div class="paragraph">
+<p>\$R  = 1, E = 1 , A = 1: 99.86 \%\$</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_4_b_3">Solução 4.b</h3>
+<div class="paragraph">
+<p>\$P(A = 1|R  = 1) = 83.33 \%\$</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_4_c">Solução 4.c</h3>
+<div class="paragraph">
+<p>\$P(F = 1|C = 1, E = 1) = 64.71 \%\$</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-21 22:16:09 -03
+Last updated 2019-11-17 14:06:56 -03
 </div>
 </div>
 <script type="text/x-mathjax-config">
