@@ -544,6 +544,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_solução_1_c_2">Solução 1.c</a></li>
 <li><a href="#_solução_1_d">Solução 1.d</a></li>
 <li><a href="#_questão_2_3">Questão 2</a></li>
+<li><a href="#_solução_2_a_3">Solução 2.a</a></li>
 <li><a href="#_questão_3_3">Questão 3</a></li>
 <li><a href="#_solução_3_a_2">Solução 3.a</a></li>
 <li><a href="#_solução_3_b_2">Solução 3.b</a></li>
@@ -3155,9 +3156,37 @@ para o problema?</p>
 <p>Aplique o Naive Bayes sobre a base de dados Monk&#8217;s Problems (disponível em <a href="http://archive.ics.uci.edu/ml/" class="bare">http://archive.ics.uci.edu/ml/</a>). Obtenha a acurácia, treinando com monks-2.train e testando em monks-2.test. Realize os experimentos:</p>
 </div>
 <div class="paragraph">
-<p>a) Considerando uma distribuição Gaussiana dos atributos;
-b)Discretizando os valores em intervalos de tamanho 1;
-c)Discretize os valore da mesma forma que em b) usando a suavização de Laplace.</p>
+<p>a) Considerando uma distribuição Gaussiana dos atributos;</p>
+</div>
+<div class="paragraph">
+<p>b)Discretizando os valores em intervalos de tamanho 1;</p>
+</div>
+<div class="paragraph">
+<p>c)Discretize os valore da mesma forma que em b) usando a suavização de Laplace.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_solução_2_a_3">Solução 2.a</h3>
+<div class="paragraph">
+<p>O teorema de Naive Bayes assume que os atributos são independentes entre si, tal que:</p>
+</div>
+<div class="paragraph">
+<p>\$P(x_{1},...,x_{d}|c)=P(x_{d}|c)...P(x_{2}|c)P(x_{1}|c)\$</p>
+</div>
+<div class="paragraph">
+<p>\$P(x_{1},...,x_{d}|c)=\prod_{i=1}^{d}P(x_{i}|c)\$</p>
+</div>
+<div class="paragraph">
+<p>Pelo teorema de Bayes:</p>
+</div>
+<div class="paragraph">
+<p>\$P(c|x_{1},...,x_{d})=\frac{P(c)\prod_{i=1}^{d}P(x_{i}|c)}{P(x_{1},...,x_{d})}\$</p>
+</div>
+<div class="paragraph">
+<p>O método de do Maximum A Posteriori (MAP) foi utilizado para realizar a tarefa de classificação das amostras. Ele consiste em rotular a amostra de teste baseado na fórmula \$C_{MAP} = argMax_{k}P(c_{k}|x)\$. A acurácia obtida foi de \$64.35 \%\$.</p>
+</div>
+<div class="paragraph">
+<p>Obteve-se uma acurácia de  64.35%.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3312,28 +3341,28 @@ rede.</p>
 <p>\$\frac{P(C)}{P(R = 0, C=1)} = 0.78 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 0, E = 0 , A = 0: 0.87 \%\$</p>
+<p>\$P(R  = 0, E = 0 , A = 0): 0.87 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 0, E = 0 , A = 1: 99.13 \%\$</p>
+<p>\$P(R  = 0, E = 0 , A = 1): 99.13 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 0, E = 1 , A = 0: 0.85 \%\$</p>
+<p>\$P(R  = 0, E = 1 , A = 0): 0.85 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 0, E = 1 , A = 1: 99.14 \%\$</p>
+<p>\$P(R  = 0, E = 1 , A = 1): 99.14 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 1, E = 0 , A = 0: 0.25 \%\$</p>
+<p>\$P(R  = 1, E = 0 , A = 0): 0.25 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 1, E = 0 , A = 1: 99.75 \%\$</p>
+<p>\$P(R  = 1, E = 0 , A = 1): 99.75 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 1, E = 1 , A = 0: 0.14 \%\$</p>
+<p>\$P(R  = 1, E = 1 , A = 0): 0.14 \%\$</p>
 </div>
 <div class="paragraph">
-<p>\$R  = 1, E = 1 , A = 1: 99.86 \%\$</p>
+<p>\$P(R  = 1, E = 1 , A = 1): 99.86 \%\$</p>
 </div>
 </div>
 <div class="sect2">
@@ -3353,7 +3382,7 @@ rede.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-11-17 14:06:56 -03
+Last updated 2019-11-17 14:35:42 -03
 </div>
 </div>
 <script type="text/x-mathjax-config">

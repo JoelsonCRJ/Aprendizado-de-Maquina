@@ -574,8 +574,28 @@ O resultado obtido para *stem:[P(x2=vhigh,X3=2|X4=2)]* foi de stem:[6.25\%], já
 Aplique o Naive Bayes sobre a base de dados Monk's Problems (disponível em http://archive.ics.uci.edu/ml/). Obtenha a acurácia, treinando com monks-2.train e testando em monks-2.test. Realize os experimentos:
 
 a) Considerando uma distribuição Gaussiana dos atributos;
+
 b)Discretizando os valores em intervalos de tamanho 1;
+
 c)Discretize os valore da mesma forma que em b) usando a suavização de Laplace.
+
+=== Solução 2.a ===
+
+O teorema de Naive Bayes assume que os atributos são independentes entre si, tal que:
+
+stem:[P(x_{1},...,x_{d}|c)=P(x_{d}|c)...P(x_{2}|c)P(x_{1}|c)]
+
+stem:[P(x_{1},...,x_{d}|c)=\prod_{i=1}^{d}P(x_{i}|c)]
+
+Pelo teorema de Bayes:
+
+stem:[P(c|x_{1},...,x_{d})=\frac{P(c)\prod_{i=1}^{d}P(x_{i}|c)}{P(x_{1},...,x_{d})}]
+
+
+O método de do Maximum A Posteriori (MAP) foi utilizado para realizar a tarefa de classificação das amostras. Ele consiste em rotular a amostra de teste baseado na fórmula stem:[C_{MAP} = argMax_{k}P(c_{k}|x)]. A acurácia obtida foi de stem:[64.35 \%].
+
+Obteve-se uma acurácia de  64.35%.
+
 
 
 === Questão 3 === 
