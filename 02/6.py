@@ -140,7 +140,7 @@ media3=np.mean(np.take(ctreino,C3))
 C4 = np.where((atreino[:,2]>5) & (atreino[:,3]>4))
 media4=np.mean(np.take(ctreino,C4))
 
-
+print(media4)
 #alternativa b
 rotulo=np.zeros((ateste.shape[0]))
 for i in range(0,ateste.shape[0]):

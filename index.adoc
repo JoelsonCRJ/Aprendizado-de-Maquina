@@ -18,7 +18,7 @@ Os códigos foram desenvolvidos na linguagem de programação Python, com auxíl
 === Pré-processamento de dados ===
 === Questão 1 ===
 A base de dados link:01/nebulosa.txt[Nebulosa] está contaminada com ruídos,
-redundâncias, dados incompletos (substituídos pelo valor -100), inconsistências e
+redundâncias, dados incompletos (substituídos pelo valor -100), inconsistências e 
 outliers. Para esta base:
 
 a) Obtenha os resultados da classificação (métrica acurácia) usando a técnica do vizinho
@@ -728,4 +728,75 @@ stem:[P(A = 1|R  = 1) = 83.33 \%]
 === Solução 4.c ===
 
 stem:[P(F = 1|C = 1, E = 1) = 64.71 \%]
+
+=== Questão 6 ===
+Para a base Servo (disponível em http://archive.ics.uci.edu/ml/):
+a)Construa uma árvore de regressão com dois níveis de nó de decisão (isto é, o
+primeiro nó de decisão (primeiro nível), os nós de decisão abaixo dele (segundo
+nível) e em seguida os nós folha) usando a medida de redução de desviopadrão. Selecione aleatoriamente 75% dos dados para treinamento que serão
+usados para construir a árvore. Retorne a estrutura da árvore construída.
+
+b)Use os restantes 25% dos dados para avaliação. Retorne as medidas MAPE e
+RMSE.
+
+c)Tente obter as regras de decisão a partir da árvore construída
+
+=== Solução 6.a ===
+As árvores de decisão são utilizadas quando há presença de variável dependente contínua. A medida utilizada para escolher o atributo que melhor particionará a árvore é a redução de desvio padrão (SDR), exposta na equação abaixo:
+
+stem:[S(D,y)=\sqrt{\frac{1}{N}\sum_{i=1}^{N}(y_{i}-\bar{y})^{2}}]
+
+O atributo que apresentar o maior S(D,y) é escolhido para dividir a árvore.
+
+A árvore de regressão construída é exposta na Figura abaixo.
+
+.Árvore de regressão para base de dados Servo
+image::6.svg[a,550,opts=inline]
+
+=== Solução 6.b ===
+Utilizando-se de 75% das amostras para treino e 25% para teste, obteve-se os resultados:
+
+
+
+* MAPE = 90.00\%
+* RMSE = 1.6\%
+
+=== Solução 6.c ===
+* Atributo 03 stem:[\leq 4] , Atributo 04 stem:[\leq 4]  stem:[\rightarrow] C1 = 1.42
+* Atributo 03 stem:[\leq 4] , Atributo 04 > 4 stem:[\rightarrow] C2 = 1.59
+* Atributo 03 > 4, Atributo 02 stem:[\leq 3] stem:[\rightarrow] C3 = 0.53
+* Atributo 03 >4, Atributo 02 > 3 stem:[\rightarrow] C4 = 0.51
+
+
+=== Questões Teóricas ===
+
+=== Questão 1 ===
+Prove porque uma variável constante não tem efeito em um classificador
+naive Bayes
+
+=== Solução 1 ===
+
+O Teorema de Naive Bayes é dado pela Equação:
+
+stem:[P(C|x_{1},x_{2},...,x_{d})=\frac{P(C)\prod_{i=1}^{d}P(x_{i}|C)}{P(x_{1},x_{2},...,x_{d}}]
+
+Supondo um único atributo constrante, tem-se:
+
+stem:[P(C|x_{1})=P(C)]
+
+Para esse mesmo atributo constante e outros atributos:
+
+stem:[P(C|x_{1},x_{2},...,x_{d})=\frac{P(C)\prod_{i=1}^{d}P(x_{i}|C)}{P(x_{1},x_{2},...,x_{d}} ]
+
+stem:[= \frac{P(C)P(x_{1})\prod_{i=2}^{d}P(x_{i}|C)}{P(x_{1},x_{2},...,x_{d})} ]
+
+
+Resultando em:
+
+stem:[\frac{P(C)\prod_{i=2}^{d}P(x_{i}|C)}{P(x_{2},...,x_{d}|C)}]
+
+O que mostra que o Naive Bayes é indeferente para uma variável constante.
+
+
+
 
