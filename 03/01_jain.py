@@ -63,10 +63,10 @@ while flag == 1:
     
     if(label_vector.all() == old_label_vector.all()):
         count +=1
-        print(count)
+       
         if(count ==2):
             flag=0
-            print(label_vector)
+            
     else:
         flag=1
         count = 0 
@@ -75,28 +75,73 @@ count_label_2_old = np.array(np.where(label_vector== 2))
 count_label_1_old = np.array(np.where(label_vector== 1))
 
 
-plt.figure(0)
-plt.plot(data_set[count_originais_1,0].flatten(),data_set[count_originais_1,1].flatten(),'go',label='C1')
-plt.plot(data_set[count_originais_2,0].flatten(),data_set[count_originais_2,1].flatten(),'bo',label='C2')
-plt.xlabel('Atributo 1')
-plt.ylabel('Atributo 2')
-plt.title('Base de dados original (jain.txt) ')
-
-plt.legend(loc='best')
-plt.figure(1)
-plt.plot(data_set[count_label_1_old,0].flatten(),data_set[count_label_1_old,1].flatten(),'go',label='C1')
-plt.plot(data_set[count_label_2_old,0].flatten(),data_set[count_label_2_old,1].flatten(),'bo',label='C2')
-plt.xlabel('Atributo 1')
-plt.ylabel('Atributo 2')
-plt.title('Classificação k-means (jain.txt) ')
-plt.legend(loc='best')
-plt.show()
+#plt.figure(0)
+#plt.plot(data_set[count_originais_1,0].flatten(),data_set[count_originais_1,1].flatten(),'go',label='C1')
+#plt.plot(data_set[count_originais_2,0].flatten(),data_set[count_originais_2,1].flatten(),'bo',label='C2')
+#plt.xlabel('Atributo 1')
+#plt.ylabel('Atributo 2')
+#plt.title('Base de dados original (jain.txt) ')
+#
+#plt.legend(loc='best')
+#plt.figure(1)
+#plt.plot(data_set[count_label_1_old,0].flatten(),data_set[count_label_1_old,1].flatten(),'go',label='C1')
+#plt.plot(data_set[count_label_2_old,0].flatten(),data_set[count_label_2_old,1].flatten(),'bo',label='C2')
+#plt.xlabel('Atributo 1')
+#plt.ylabel('Atributo 2')
+#plt.title('Classificação k-means (jain.txt) ')
+#plt.legend(loc='best')
+#plt.show()
 
 
 #plt.xlabel(data_set)/
 #plt.ylabel(iris.feature_names[1]);
 
 
-#agora para o data set doo spiral
+#agora com o algoritmo hierarquico (aglomerativo)
+#inicialmente tem-se Numero de clusters = numero de amostras
+#(matriz de similaridade)
+
+def matriz_de_similaridade(array):
+    SIMILARIDADE = np.zeros((array.shape[0],array.shape[0]))
+    for i in range(0,SIMILARIDADE.shape[0]):
+        for j in range(0,SIMILARIDADE.shape[0]):
+            SIMILARIDADE[i,j]= distance(data_set[i,0],data_set[i,1],data_set[j,0],data_set[j,1])
+    return(SIMILARIDADE)
+
+M = matriz_de_similaridade(data_set)
+
+for i in range(0,data_set.shape[0]):
+    for j in range(0,data_set.shape[0]):
+        if (i ==j):    
+                M[i,j]=10000
+
+result = np.where(M[:,4] == np.amin(M[:,4]))
+print(int(result[0]))
+Labels_novo = np.arange(0,data_set.shape[0],1)
+Labels_novo[4]=4
+Labels_novo[int(result[0])]=4
+print(Labels_novo)
+
+flag=1
+while (flag ==1):
+    for i in range(0,M.shape[0]):
+        result = np.where(M[:,i] == np.amin(M[:,i]))
+        if(int(result[0])>i):
+            
+            Labels_novo[i]=i
+            Labels_novo[int(result[0])]=i
+        else:
+            L=np.argsort(M[:,i])[:3]
+            print(L)
+            Labels_novo[i]=i
+            Labels_novo[L[1]]=i
+    flag=0
+
+print(np.sort(Labels_novo))
+
+            
+            
+            
+
 
 
