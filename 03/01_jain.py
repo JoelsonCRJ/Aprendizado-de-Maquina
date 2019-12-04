@@ -115,29 +115,62 @@ for i in range(0,data_set.shape[0]):
         if (i ==j):    
                 M[i,j]=10000
 
-result = np.where(M[:,4] == np.amin(M[:,4]))
-print(int(result[0]))
+#result1 = dist_min = np.argsort(M[:,6])[:3]
+#result2 = dist_min = np.argsort(M[:,7])[:3]
+#result3 = dist_min = np.argsort(M[:,8])[:3]
+#result4 = dist_min = np.argsort(M[:,9])[:3]
+#
+#print('{} {} {} {}'.format(result1,result2,result3,result4))
 Labels_novo = np.arange(0,data_set.shape[0],1)
-Labels_novo[4]=4
-Labels_novo[int(result[0])]=4
-print(Labels_novo)
+#print(Labels_novo[4])
+#print(Labels_novo[result1[0]])
+#print(np.where(Labels_novo[0:2]==2))
+
+#Labels_novo[3]=3
+#Labels_novo[result[0]]=3
+#print(Labels_novo)
+
+
+
 
 flag=1
 while (flag ==1):
-    for i in range(0,M.shape[0]):
-        result = np.where(M[:,i] == np.amin(M[:,i]))
-        if(int(result[0])>i):
+    print("aqui comeca o loop")
+    dist_min = np.argsort(M[:,0])[:3]
+    Labels_novo[int(dist_min[0])]=0 
+    for i in range(1,M.shape[0]-1):
+        dist_min = np.argsort(M[:,i])[:3]
+#        next_dist_min=np.argsort(M[:,i+1])[:3]
+#        last_dist_min=np.argsort(M[:,i-1])[:3]
+        if(Labels_novo[i]!=i): #fui rotulado!   
+#            print(i)
+            print("{} rotulado".format(i))
+            continue
+        else:#nao fui rotulado
+            #se ninguem rotulou a msm amostra q eu
+            print("{} {}" .format((np.asarray((np.where(Labels_novo[0:i]==Labels_novo[dist_min[0]])))).shape[1],i))
+            if( np.asarray(np.where(Labels_novo[0:i]==dist_min[0])).shape[1]==0):
+               # print("a")
+                Labels_novo[int(dist_min[0])]=i #rotular         
+            if(np.asarray(np.where(Labels_novo[0:i]==Labels_novo[dist_min[0]])).shape[1] !=0):
+                
+                print("entrei aqui")
+                Labels_novo[int(dist_min[1])]=i
+            #        if( dist_min[0]!=Labels_novo[dist_min[0]] and  dist_min[0]<i and dist_min[1]!=Labels_novo[dist_min[1]] and  dist_min[1]<i):
+    #            print("entrei aqui2")
+    #            Labels_novo[dist_min[2]]=i
             
-            Labels_novo[i]=i
-            Labels_novo[int(result[0])]=i
-        else:
-            L=np.argsort(M[:,i])[:3]
-            print(L)
-            Labels_novo[i]=i
-            Labels_novo[L[1]]=i
+                            
+                
+                
+                
+            
+                
+                
     flag=0
 
-print(np.sort(Labels_novo))
+#print(np.sort(Labels_novo))
+print(Labels_novo)
 
             
             
