@@ -224,6 +224,7 @@ plt.plot(data_set[count_originais_2,0].flatten(),data_set[count_originais_2,1].f
 plt.xlabel('Atributo 1')
 plt.ylabel('Atributo 2')
 plt.title('Base de dados original (jain.txt) ')
+plt.savefig('jain_original.eps', format='eps',dpi=300 )
 
 plt.legend(loc='best')
 plt.figure(1)
@@ -233,6 +234,7 @@ plt.xlabel('Atributo 1')
 plt.ylabel('Atributo 2')
 plt.title('Classificação k-means (jain.txt) ')
 plt.legend(loc='best')
+plt.savefig('jain_kmeans.eps', format='eps',dpi=300 )
 
 #Retoma os labels e cria uma matriz para plot
 dicio = {1.0:"k",2.0:"r",3.0:"b",4.0:"g",5.0:"k",6.0:"m",7.0:"y",8.0:"darkblue"}
@@ -242,10 +244,10 @@ plt.xlabel('Primeiro Atributo')
 plt.ylabel('Segundo Atributo')
 for i in range(0,len(Y[:,0])):
     plt.scatter(Y[i,0] , Y[i,1], c = dicio[listaclustersJainOrganizado[i]+1])
-plt.show()
-#print(label_vector) #k-means
-#print(listaclustersJainOrganizado) #hierarquico
-#print(labels_originais)
+plt.savefig('jain_hierarquico.eps', format='eps',dpi=300 )
+##print(label_vector) #k-means
+##print(listaclustersJainOrganizado) #hierarquico
+##print(labels_originais)
 
 
 #print(labels_originais) #original

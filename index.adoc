@@ -1,21 +1,21 @@
 :source-highlighter: pygments 	
+
 :imagesdir: ./figs
 
 :stem:
 
-= PGEE-5574: Tópicos Especiais em Processamento de Sinais: Aprendizado de Máquina
+= DCA0445: Processamento Digital de Imagens
 Joelson Rocha <JoelsonRocha.Eng@gmail.com>
 :toc: left
 
-== Introdução
-
+== Introdução ==
 Este espaço tem como objetivo documentar as atividades propostas pelo Professor Dr. Patrick Marques Ciarellix durante a disciplina de Tópicos Especiais em Processamento de Sinais: Aprendizado de Máquina. Aqui são compartilhados enunciados de questões, bem como a solução comentada e implementada.
 
 Os códigos foram desenvolvidos na linguagem de programação Python, com auxílio das bibliotecas Numpy e Pandas, e estão disponíveis ao final da resolução de cada questão.
 
 == Lista 1  ==
 
-=== Pré-processamento de dados ===
+=== Pré-processamento de dados === 
 === Questão 1 ===
 A base de dados link:01/nebulosa.txt[Nebulosa] está contaminada com ruídos,
 redundâncias, dados incompletos (substituídos pelo valor -100), inconsistências e 
@@ -274,9 +274,10 @@ d) Calcule o coeficiente de correlação entre os dados e realize o teste de hip
 
 Inicialmente observou-se que a distribuição dos dados se assemelha a uma reta, polinômio de primeiro grau, conforme a Figura 1:
 
-
+[.center]
 .Tempo dos corredores dos 100 metros livres das olimpíadas
-image::03a_1.svg[a,600,opts=inline]
+image:03a_1.svg[a,600,opts=inline]
+
 
 Dessa forma, realizou-se a regressão linear de primeiro grau para a base de dados. Os cálculos para encontrar os coefienteces stem:[w_{0}] e stem:[w_{1}] seguem abaixo:
 
@@ -298,7 +299,7 @@ f=35.56 -0.012x
 ++++
 
 .Equação de regressão linear stem:[f=35.56 -0.012x]
-image::03a_2.svg[a,600,opts=inline]
+image:03a_2.svg[a,600,opts=inline]
 
 Para calcular o erro RMSE utilizou-se a seguinte equação:
 
@@ -376,7 +377,7 @@ Já para 1%:
 Portanto, a hipótese nula foi rejeitada para 1% e existe a possibilidade de haver dependência entre x e y com 99% de significância.
 
 
-=== Solução 3.d ===
+=== Solução 3.d 
 
 Para realizar o teste de hipótese pelo coeficiente de correlação de Pearson, primeiramente foi obtido o valor P, coeficietne de correlação entre dois atributos, utilizando-se a seguinte fórmula:
 
@@ -418,14 +419,14 @@ A hipótese nula foi rejeitada para 5%, portanto há confiabilidade de 99%.
 
 || link:01/03.py[03.py]  ||
 
-=== Questão 4 === 
+=== Questão 4 
 Para a base de dados Auto MPG (disponibilizada em https://archive.ics.uci.edu/ml/datasets/Auto+MPG) faça:
 
 a) Baixe o arquivo auto-mpg.data, remova as linhas que tem interrogação (?) e remova a última coluna (por quê?). Com as 150 primeiras linhas obtenha um modelo de regressão linear multivariada para predizer o valor da primeira variável (mpg). Avalie o resultado sobre o restante da base de dados, usando a métrica RMSE.
 
 b) Verifique quais são os atributos que estão relacionados com a saída: A partir dos coeficientes obtidos, aplique o teste F de Snedecor sobre cada variável individualmente (conforme nos slides). Indique quais foram os atributos que podem ser desconsiderados. Obtenha sobre o restante da base de dados a métrica RMSE com o modelo sem considerar esses atributos (não precisa estimar um novo modelo, só considere os valores dos coeficientes deles iguais a zero). Compare os resultados obtidos em a) e em b). Considere que os resíduos do modelo possui distribuição aproximadamente normal e que stem:[F_{1,142} = 3,908].
 
-=== Solução 4.a ===
+=== Solução 4.a 
 
 As amostras com dados faltantes ("?") foram excluídas e o último atributo também, já que não apresenta nenhuma informação relevante para a tarefa de classificação, pois o modelo do carro não intefere em suas características. 
 
@@ -434,7 +435,7 @@ A rotina para a regressão foi elaborada por meio matricial, sendo possível est
 Ao se aplicar a métrica RMSE sobre o conjunto de dados de teste foi encontrado o resultado de *6.247*.Tendo em vista que o RMSE penaliza grandes desvios entre o valor real e o estimado,para essa base de testes ele demonstrou um bom ajuste dos
 dados ao modelo proposto.
 
-=== Solução 4.b ===
+=== Solução 4.b 
 
 Para saber se um atributo (ou conjunto de atributos) está contribuindo ou não ao modelo é
 necessário se fazer o teste estatístico entre o modelo obtido com e sem o atributo analisado (teste F de
@@ -453,13 +454,13 @@ confirma que os dois atributos eliminados não estavam contribuindo para a class
 || link:01/04.py[04.py]  ||
 
 
-=== Questões Teóricas === 
+=== Questões Teóricas 
 
-=== Questão 1 ===
+=== Questão 1 
 
 Explique o dilema entre bias e variância e o seu relacionamento com underfitting e
 overfitting.
-=== Solução Questão 1 ===
+=== Solução Questão 1 
 
 Bias pode ser definido como a diferença entre o valor esperado calculado através do modelo desenvolvido e  o real na qual. Ele está diretamente associado à habilidade que o modelo desenvolvido tem em se ajustar conjunto de dados. Um modelo pode ser dito com um alto bias quando a sua estrutura não descreve corretamente os dados. Em resumo, Bias é o erro que ocorre ao tentar aproximar o comportamento dos dados.
 
@@ -467,7 +468,7 @@ Quando um modelo tem uma alta variância ele representa muito bem os dados, por�
 
 O Bias, nos permite entender o comportamento do modelo e nos dá a possibilidade de tomar ações corretivas. Quando o modelo tem um alto bias significa que pode-se adicionar mais atributos para melhorar a tarefa de classificação. No caso de alta variância, uma alternativa é redução de atributos, ou inclur mais amostras.
 
-=== Questão 2 ===
+=== Questão 2 
 
 Comente sobre a veracidade das afirmações:
 
@@ -479,27 +480,27 @@ dados, maior a tendência de se obter modelos mais adequados”.
 
 c)“Às vezes com simples manipulações na base de dados (limpeza, conversão de valores, etc.) pode-se conseguir melhoras significativas nos resultados, sem fazer nenhuma alteração na técnica de aprendizado de máquina usada”.
 
-=== Solução 2.a === 
+=== Solução 2.a  
 
 A afirmação está errada. Isto pode ser observado na questão 02.b. O conjunto inicial possui 30 atributos. Aplicou-se o PCA sobre o esse conjunto e obteve-se a mesma acurária próxima ao do conjunto original na questão 02.a. O importante é se reduzir o conjunto original, porém mantendo a relação entre as amostras.
 
-=== Solução 2.b === 
+=== Solução 2.b  
 
 A afirmação está errada, pois não se basta ter um grande número de amostras sem nenhum tipo de pré-processamento. Ao não se aplicar um pré-processamento no conjunto de dados, se corre o grande risco de realizar tarefas de classificação ambíguas, pois não se garante a qualidade dos dados.
 
-=== Solução 2.c === 
+=== Solução 2.c  
 
 A afirmação está correta. O pré-processamento de dados tem a capacidade de otimizar o procedimento de classificação e garantir que não haverá resultado distorcido.
 
-=== Questão 3 ===
+=== Questão 3 
 
 Em certas tarefas de aprendizado supervisionado as amostras de diferentes classes aparecem com sobreposição, de tal forma que não é possível obter uma superfície que separe de forma adequada as amostras das diferentes classes. O que se poderia fazer nestas situações para tentar melhorar a qualidade de classificação?
 
-=== Solução Questão 3 ===
+=== Solução Questão 3 
 
 É possível realizar testes sobre a relação linear dos atributos para saber quais realmente influenciam ou não no comportamento dos dados com a finalidade de remover algum atributo que possa estar contribuindo diretamente para essa situação.
 
-=== Questão 4 ===
+=== Questão 4 
 
 Quais devem ser as características que uma base de dados deve ter para:
 
@@ -507,16 +508,16 @@ a) Uma regressão linear se ajustar bem aos dados?
 b) O classificador Rocchio conseguir um bom resultado de classificação?
 c) O classificador Vizinho mais Próximo conseguir um bom resultado de classificação?
 
-=== Solução 4.a ===
+=== Solução 4.a 
 
 Haver uma boa identificação do polinômio interpolador, baseado na observação dos dados, e que seja comprovada, através de testes de hipótese,
 a interdependência dos atributos.
 
-=== Solução 4.b ===
+=== Solução 4.b 
 
 Uma base de dados com todas as classes balanceadas igualmente.
 
-=== Questão 5 ===
+=== Questão 5 
 
 Em uma empresa é adotado um método de Aprendizado de Máquina para detectar
 defeito de fabricação de peças mecânicas, sendo que raramente acontece este tipo de
@@ -528,11 +529,11 @@ a) Por que o gerente não ficou empolgado com o resultado achado?
 b) O que o funcionário poderia fazer para confirmar se o método empregado é adequado
 para o problema?
 
-=== Solução 5.a ===
+=== Solução 5.a 
 
 Pois, conforme o enunciado cita, há um número baixo de amostras classificadas como defeituosas em relação ao número de amostras sem defeito. Dessa forma, o conjunto de dados está desbalanceado tendo como resultado favorável a classe majoritária.
 
-=== Solução 5.b ===
+=== Solução 5.b 
 
 
 
@@ -540,11 +541,11 @@ Reduzir o número de amostras sem defeito, com a finalidade de garantir o corret
 
 
 
-== Lista 2  ==
+== Lista 2  
 
-=== Métodos de Classificação Baseados em Probabilidade ===
+=== Métodos de Classificação Baseados em Probabilidade 
 
-=== Questão 1 ===
+=== Questão 1 
 Para a base Car Evaluation (disponível em http://archive.ics.uci.edu/ml/), considerando que o primeiro atributo é x1, o segundo é x2 e assim por diante, estime as probabilidades:
 
 a)P(x1 =med) e P(x2 = low)
@@ -557,20 +558,20 @@ d)P(x2= vhigh,X3=2|X4=2) e P(x3=4,x5=med|x1=med)
 
 
 
-=== Solução 1.a ===
+=== Solução 1.a 
 A probabilidade calculada para ambas foi de 25 stem:[\%].
 
-=== Solução 1.b ===
+=== Solução 1.b 
 O resultado obtido para *stem:[P(x6=high|x3=2)]* foi de stem:[33.33\%], já para *stem:[P(x2=low|x4=4)]* foi de stem:[25\%].
 
-=== Solução 1.c ===
+=== Solução 1.c 
 O resultado obtido para *stem:[P(x1=low|x2=low,X5=small)]* foi de stem:[25.00\%], já para *stem:[P(x4=4|x1=med,X3=2)]* foi de stem:[33.33\%].
 
-=== Solução 1.d ===
+=== Solução 1.d 
 O resultado obtido para *stem:[P(x2=vhigh,X3=2|X4=2)]* foi de stem:[6.25\%], já para *stem:[P(x3=4,x5=med|x1=med)]* foi de stem:[8.33\%].
 
 
-=== Questão 2 ===
+=== Questão 2 
 Aplique o Naive Bayes sobre a base de dados Monk's Problems (disponível em http://archive.ics.uci.edu/ml/). Obtenha a acurácia, treinando com monks-2.train e testando em monks-2.test. Realize os experimentos:
 
 a) Considerando uma distribuição Gaussiana dos atributos;
@@ -579,7 +580,7 @@ b)Discretizando os valores em intervalos de tamanho 1;
 
 c)Discretize os valore da mesma forma que em b) usando a suavização de Laplace.
 
-=== Solução 2.a ===
+=== Solução 2.a 
 
 O teorema de Naive Bayes assume que os atributos são independentes entre si, tal que:
 
@@ -598,18 +599,14 @@ Obteve-se uma acurácia de  64.35%.
 
 
 
-=== Questão 3 === 
+=== Questão 3  
 
 Para a rede bayesiana da figura abaixo, verifique as seguintes afirmações,
 indicando se é falso ou verdadeiro e fornecendo a devida explicação.
 
 image::a.png[250,250,align="center"]
 
-a) A é independe de B
-
-b)A é independe de B tal que foi observado G
-
-c)C é independe de B tal que foi observado H
+600
 
 d)G é independente de E tal que foi observado B e I
 
@@ -617,7 +614,7 @@ e)G é independente de I tal que foi observado A e B
 
 
 
-=== Solução 3.a ===
+=== Solução 3.a 
 stem:[A \rightarrow I \leftarrow B]: caminho bloqueado, pois I não é conhecido.
 
 stem:[A \rightarrow D \rightarrow G \leftarrow B]:  caminho bloqueado, pois G não é conhecido.
@@ -627,7 +624,7 @@ stem:[A \rightarrow C \rightarrow G \leftarrow B]:  caminho bloqueado, pois G n�
 Dessa forma, A e B são independentes.
 
 
-=== Solução 3.b ===
+=== Solução 3.b 
 
 Analizando os caminhos que levam de A até B, tem-se:
 
@@ -641,7 +638,7 @@ Dessa forma, A e B não são independentes.
 
 
 
-=== Solução 3.c === 
+=== Solução 3.c  
 Analizando os caminhos que levam de C até B, tem-se:
 
 
@@ -652,7 +649,7 @@ stem:[C \rightarrow G \leftarrow B]:  caminho bloqueado, pois G não é conhecid
 Portanto, C e B são independentes.
 
 
-=== Solução 3.d ===
+=== Solução 3.d 
 Analizando os caminhos que levam de D até E, tem-se:
 
 stem:[G \leftarrow B \rightarrow E]: caminho bloqueado, pois B é conhecido, logo G e E são bloqueados nesse caminho.
@@ -665,7 +662,7 @@ stem:[G \leftarrow D \leftarrow A \rightarrow I \leftarrow H \leftarrow E]:  cam
 Portanto, G e E não são independentes, pois nem todos os caminhos estão bloqueados.
 
 
-=== Solução 3.e ===
+=== Solução 3.e 
 Analizando os caminhos que levam de G até I, tem-se:
  
 stem:[G \leftarrow B \rightarrow I]: Caminho entre G e I bloqueado, pois B é conhecido.
@@ -674,11 +671,13 @@ stem:[G \leftarrow D \leftarrow A \rightarrow I]: G e I são bloqueados, pois A 
 
 Dessa forma, G e I são independentes.
 
-=== Questão 4 ===
+=== Questão 4 
 
 Dada a rede bayesiana abaixo e a base de dados trânsito.txt, obtenha (na base de dados os valores 0 indicam que o evento não aconteceu, enquanto 1 aconteceu, sendo C chuva, F feriado, E ngarrafamento, R ruas alagadas e A acidente):
 
-image::b.png[250,250,align="center"]
+
+image:b.png[250,250,align="center"]
+
 
 a)As probabilidades condicionais e a priori de cada nó necessários para o uso da
 rede.
@@ -689,7 +688,7 @@ b)A probabilidade de acontecer acidente tal que foi observado ruas alagadas
 c)A probabilidade de ser feriado tal que foi observado chuva e engarrafamento
 (P(Feriado = 1|Chuva = 1, Engarrafamento = 1))
 
-=== Solução 4.a ===
+=== Solução 4.a 
 
 
 stem:[P(C) = 47 \%]
@@ -721,11 +720,11 @@ stem:[P(R  = 1, E = 1 , A = 0): 0.14 \%]
 
 stem:[P(R  = 1, E = 1 , A = 1): 99.86 \%]
 
-=== Solução 4.b ===
+=== Solução 4.b 
 
 stem:[P(A = 1|R  = 1) = 83.33 \%]
 
-=== Solução 4.c ===
+=== Solução 4.c 
 
 stem:[P(F = 1|C = 1, E = 1) = 64.71 \%]
 
@@ -750,10 +749,15 @@ O atributo que apresentar o maior S(D,y) é escolhido para dividir a árvore.
 
 A árvore de regressão construída é exposta na Figura abaixo.
 
-.Árvore de regressão para base de dados Servo
-image::6.svg[a,550,opts=inline]
 
-=== Solução 6.b ===
+[.float-group]
+--
+[.center.text-center]
+.Árvore de regressão para base de dados Servo
+image:6.svg[a,500,opts=inline]
+--
+
+=== Solução 6.b 
 Utilizando-se de 75% das amostras para treino e 25% para teste, obteve-se os resultados:
 
 
@@ -761,20 +765,20 @@ Utilizando-se de 75% das amostras para treino e 25% para teste, obteve-se os res
 * MAPE = 90.00\%
 * RMSE = 1.6\%
 
-=== Solução 6.c ===
+=== Solução 6.c 
 * Atributo 03 stem:[\leq 4] , Atributo 04 stem:[\leq 4]  stem:[\rightarrow] C1 = 1.42
 * Atributo 03 stem:[\leq 4] , Atributo 04 > 4 stem:[\rightarrow] C2 = 1.59
 * Atributo 03 > 4, Atributo 02 stem:[\leq 3] stem:[\rightarrow] C3 = 0.53
 * Atributo 03 >4, Atributo 02 > 3 stem:[\rightarrow] C4 = 0.51
 
 
-=== Questões Teóricas ===
+=== Questões Teóricas 
 
-=== Questão 1 ===
+=== Questão 1 
 Prove porque uma variável constante não tem efeito em um classificador
 naive Bayes
 
-=== Solução 1 ===
+=== Solução 1 
 
 O Teorema de Naive Bayes é dado pela Equação:
 
@@ -798,5 +802,42 @@ stem:[\frac{P(C)\prod_{i=2}^{d}P(x_{i}|C)}{P(x_{2},...,x_{d}|C)}]
 O que mostra que o Naive Bayes é indeferente para uma variável constante.
 
 
+== Lista 3 
 
+=== Parte V - Métodos de agrupamento 
+
+=== Questão 1 
+Para as bases de dados Spiral e Jain (disponíveis em http://cs.joensuu.fi/sipu/datasets/), agrupe os dados em 3 e 2 grupos, respectivamente, usando kmeans e clusterização hierárquica. Avalie o resultado com a
+métrica de acurácia com o seguinte procedimento: para cada cluster verifique qual foi a classe predominante, amostras pertencentes a outras classes estão no grupo errado.
+Faça os experimentos com a distância Euclidiana. Gere gráficos com os grupos formados pelo kmeans e clusterização hierárquica. Comente os resultados. Lembre-se
+de não usar o atributo da classe para agrupar os dados.
+
+=== Solução 1 
+
+Inicialmente a base de dados foi rotulada da seguinte forma:
+
+[.float-group]
+--
+[.center.text-center]
+.Amostras da base de dados original e seus respectivos rótulos
+image:jain_original.svg[a,400,opts=inline]
+--
+
+Para a aplicação do algoritmo K-means, foram seguidos os seguintes passos:
+
+1) Dividir a base de dados ao meio;
+2) Utilizar como centroides iniciais as amostras na metade de cada grupo, como centróides para a primeira interação do algoritmo.
+
+De posse dos centróides inciais (C1 e C2), foi elaborada uma rotina automática para agrupar as amostras baseada no algoritmo de k-means e que só para de recalcular os centróides, se não houvesse modificação de label em duas interações.
+
+Os resultados obtidos estão expostos abaixo.
+
+
+
+[.float-group]
+--
+[.center.text-center]
+.Amostras da base de dados original e seus respectivos rótulos
+image:jain_kmeans.svg[a,400,opts=inline]
+--
 
