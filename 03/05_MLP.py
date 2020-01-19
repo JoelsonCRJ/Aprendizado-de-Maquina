@@ -1,13 +1,3 @@
-"""
-Created on Mon Jun 11 15:10:54 2018
-
-@author: Fabiana Santos
-
-Lista 3
-
-Exercício 4  letra a 
-"""
-
 import numpy as np
 import pandas as pd
 import time

@@ -9,7 +9,9 @@ import math
 #alternativa a 
 #probabilidades condicionais e a priori de cada nós
 dados = np.genfromtxt('transito.txt',delimiter="")
-data = dados[1:,:]
+print(dados)
+data = dados
+
 
 #chuva
 ProbC = len(data[data[:,0]==1])/len(data)
@@ -96,4 +98,4 @@ for i in range(0,len(data)):
 
 Prob_E_RA_A = C2/len(data)
 Prob_E_RA = C1/len(data)  
-print("P(Feriado = 1|Chuva = 1, Engarrafamento= 1) = {0:.2f}%" .format(((Prob_E_RA_A/Prob_E_RA)*100)))
+print("P(Feriado = 1|Chuva = 1, Engarrafamento= 1) = {0:.2f}%" .format((100-(Prob_E_RA_A/Prob_E_RA)*100)))
